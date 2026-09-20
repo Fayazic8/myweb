@@ -1,1 +1,733 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fayazi — Journal of an Executor</title>
 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Feather Icons (untuk ikon) -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style&script/style.css">
+</head>
+<body>
+
+    <!-- HEADER / NAVIGASI -->
+    <header class="main-header">
+        <a href="#beranda" class="logo" id="typing-logo"></a>
+        <nav class="main-nav">
+            <a href="#tentang">Tentang</a>
+            <a href="#jejak">Jejak</a>
+            <a href="#proyek">Proyek</a>
+            <a href="#catatan">Catatan</a>
+            <a href="#belajar">Belajar</a>
+        </nav>
+        <button id="menu-toggle" class="menu-toggle"><i data-feather="menu"></i></button>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="beranda" class="hero">
+        <div class="hero-content">
+            <h1>EKSEKUSI > MOTIVASI</h1>
+            <p class="manifesto">Ini bukan tempat saya jadi sempurna, tapi tempat saya jadi nyata. Selamat datang di jurnal seorang eksekutor.</p>
+        </div>
+    </section>
+
+    <!-- KONTEN UTAMA DIMULAI DI SINI -->
+    <main>
+      
+      <!-- 1. TENTANG -->
+      <section id="tentang" class="page-section">
+        <h2 class="section-title">Di Balik Jurnal Ini</h2>
+        <div class="tentang-container">
+            <div class="tentang-teks">
+                <p>Nama saya Fayazi. Tangan saya pernah berbau adonan tepung dan minyak panas di pagi hari, dan di malam hari mengetik baris kode untuk melatih model AI. Saya tidak memilih jalan yang mudah, saya membangunnya.</p>
+                <blockquote class="prinsip-quote">"Gengsi tidak bisa membayar tagihan atau membeli server. Aksi bisa."</blockquote>
+                <p>Perjalanan ini penuh lika-liku: dari mengelola sistem stok gorengan, belajar administrasi sistem Linux, hingga membangun platform digital. Setiap langkah, entah berhasil atau gagal, adalah bagian dari kode sumber diri saya.</p>
+            </div>
+            <div class="tentang-galeri">
+                <div class="galeri-item" style="background-image: url('https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');"></div>
+                <div class="galeri-item" style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1740&auto=format&fit=crop');"></div>
+                <div class="galeri-item" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1932&auto=format&fit=crop');"></div>
+            </div>
+        </div>
+      </section>
+
+      <!-- 2. JEJAK & REKAM JEJAK (DESAIN EKSKLUSIF) -->
+      <section id="jejak" class="page-section bg-alt">
+          <h2 class="section-title">Dua Dunia, Satu Eksekutor</h2>
+          <p class="section-intro">Kode dan adonan adalah medium saya. Keduanya menuntut presisi, iterasi, dan hasil nyata. Ini adalah rekam jejak saya di kedua medan tersebut.</p>
+          <!-- [DIGABUNG] Jejak Digital + Jejak Rasa jadi satu kartu -->
+          <div class="jejak-container jejak-container--single">
+              <a href="cvdoc/resume-eksekutor.html" class="jejak-card">
+                  <div class="jejak-card-content">
+                      <div class="jejak-icon-wrapper"> <i data-feather="layers"></i> </div>
+                      <h3>Jejak Eksekutor</h3>
+                      <p class="jejak-role">Admin Sistem, Operasional & Konten — SPPG Guluk-Guluk 03</p>
+                      <p class="jejak-desc">Menyatukan dua dunia: presisi digital (baris perintah, sistem, konten) dan disiplin lapangan (bahan baku, stok, operasional). Satu eksekutor, dua medan yang saling menopang.</p>
+                      <div class="jejak-action">
+                          <span>Buka Rekam Jejak</span>
+                          <i data-feather="arrow-right"></i>
+                      </div>
+                  </div>
+              </a>
+          </div>
+      </section>
+      
+      <!-- 3. PROYEK & EKSPERIMEN -->
+      <section id="proyek" class="page-section">
+         <h2 class="section-title">Blueprint & Prototipe</h2>
+        <div class="proyek-grid">
+            <!-- [DIPERBARUI] Studi kasus Gacoan diganti karena sudah pindah ke SPPG/MBG -->
+            <div class="proyek-card"><div class="card-header"><h3>Admin SPPG — Bahan Baku, Stok & Konten Resmi</h3><span class="status-tag aktif">AKTIF</span></div><p>Menjalankan peran admin di SPPG Guluk-Guluk 03 (Program Makan Bergizi Gratis): mencatat bahan baku masuk, mengelola dokumentasi stok harian, dan memproduksi konten untuk akun resmi SPPG.</p><div class="tech-stack"><i data-feather="package" title="Bahan Baku Masuk"></i><i data-feather="clipboard" title="Pencatatan Stok"></i><i data-feather="camera" title="Konten Akun Resmi"></i></div></div>
+            <!-- [DIUBAH] Status diubah menjadi AKTIF -->
+            <div class="proyek-card"><div class="card-header"><h3>Sistem Stok Gorengan</h3><span class="status-tag aktif">AKTIF</span></div><p>Prediksi stok harian otomatis pakai Google Sheet & App Script untuk meminimalkan sisa bahan.</p><div class="tech-stack"><i data-feather="figma" title="Google Sheet"></i><i data-feather="code" title="App Script"></i></div></div>
+            <div class="proyek-card"><div class="card-header"><h3>Eksperimen Snack Rumahan</h3><span class="status-tag eksperimen">EKSPERIMEN</span></div><p>Menguji pasar untuk berbagai resep snack rumahan (Basreng, Chili Oil, dll.) melalui penjualan terbatas di media sosial.</p><div class="tech-stack"><i data-feather="instagram" title="Instagram"></i><i data-feather="dollar-sign" title="Marketing"></i></div></div>
+            <div class="proyek-card"><div class="card-header"><h3>Bot WhatsApp Pelanggan</h3><span class="status-tag gagal">GAGAL & BELAJAR</span></div><p>Upaya membuat bot untuk handle pesanan. Gagal karena batasan teknis, tapi belajar banyak tentang API.</p><div class="tech-stack"><i data-feather="send" title="WhatsApp API"></i></div></div>
+        </div>
+      </section>
+      
+      <!-- [DIROMBAK TOTAL] LOGBOOK FINANSIAL INTERAKTIF -->
+      <section id="finansial" class="page-section">
+          <h2 class="section-title">Logbook Finansial</h2>
+          <p class="section-intro">Transparansi pada diri sendiri. Angka adalah bukti eksekusi. Data ini ditarik langsung dari logbook harian saya secara real-time.</p>
+          
+          <!-- BARU -->
+          <div class="view-switcher">
+              <button class="switcher-btn active" data-period="daily">Harian</button>
+              <button class="switcher-btn switcher-btn--premium" data-period="weekly">🔒 Mingguan</button>
+              <button class="switcher-btn switcher-btn--premium" data-period="monthly">🔒 Bulanan</button>
+          </div>
+
+          <div id="finansial-dashboard-container" class="finansial-dashboard">
+              <!-- Kartu Finansial akan dimuat oleh JavaScript di sini -->
+              <div class="loader-finansial">Memuat data...</div>
+          </div>
+      </section>
+      
+      <!-- 4. CATATAN HARIAN JALANAN — [DIKEMBALIKAN] tampil inline, arsip lengkap dikunci akses berbayar -->
+      <section id="catatan" class="page-section bg-alt">
+        <h2 class="section-title">Logbook dari Medan Perang</h2>
+        <div class="log-timeline">
+<article class="log-entry">
+    <div class="log-meta">19.09.26 | 20:00 | Inventori & Pasar Modal</div>
+    <h4>ROI & Ekspansi Aset Operasional</h4>
+    <p>Hasil perputaran dari trading dan rezeki tambahan dari teman yang membeli VC game akhirnya membuahkan hasil nyata. Dua hari ini difokuskan untuk mengonversi profit digital menjadi aset fisik—membeli peralatan untuk ekspansi jualan gorengan dan kebutuhan pendukung lainnya. Semuanya terasa sangat worth it, sebuah alokasi modal yang dieksekusi dengan presisi demi memperkuat arus kas. <span class="hashtag">#ekspansi</span> <span class="hashtag">#ROI</span> <span class="hashtag">#asetfisik</span></p>
+</article>
+
+<article class="log-entry">
+    <div class="log-meta">13.09.26 | 15:00 | Area Cuci Ompreng</div>
+    <h4>Fisik Terkuras, Mental Terjaga</h4>
+    <p>Kembali terjun ke medan pertempuran cuci ompreng. Ritmenya memang menguras kalori besar-besaran, tapi secara mengejutkan suasananya jauh lebih menyenangkan. Berinteraksi dan bekerja berdampingan dengan orang-orang yang lebih dewasa ternyata menciptakan lingkungan yang sehat. Tubuh boleh lelah dan remuk, tapi pikiran dan mental tetap ringan tanpa beban. <span class="hashtag">#mentalhealth</span> <span class="hashtag">#lingkungankerja</span> <span class="hashtag">#fisikvsmental</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">12.09.26 | 23:59 | Sistem Laptop</div>
+    <h4>Protokol Pembersihan: Hard Reset Data</h4>
+    <p>Mengeksekusi penghapusan masif pada hampir seluruh file dan dokumen kerja keras di laptop, menyisakan hanya project website label gizi yang krusial. Sebuah aksi bersih-bersih radikal untuk membuang beban masa lalu. Ada juga pihak tak dikenal yang tiba-tiba meminta akses akun Gmail—tentu saja permintaan irasional itu saya tolak mentah-mentah. <span class="hashtag">#hardreset</span> <span class="hashtag">#datawiped</span> <span class="hashtag">#privasisistem</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">11.09.26 | 16:00 | Dapur Gorengan</div>
+    <h4>Diversifikasi Income: Gorengan & Grafik Market</h4>
+    <p>Bertepatan dengan hari pemberhentian resmi sebagai admin, otak langsung memutar skenario baru: berjualan gorengan. Izin eksekusi sudah diamankan sejak Kamis kemarin. Lelahnya dobel karena harus membagi fokus, tapi tenaga ekstra datang dari profit trading yang mulai masuk. Kombinasi ekonomi sektor riil dan pasar modal yang lumayan menjaga ketahanan finansial. <span class="hashtag">#diversifikasi</span> <span class="hashtag">#gorengan</span> <span class="hashtag">#profittrading</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">10.09.26 | 21:20 | Meja Kerja</div>
+    <h4>Rebranding Jabatan: Admin Resign, CEO Cuci Elap Ompreng Lahir</h4>
+    <p>Hari ini resmi "berhenti" jadi admin — versi bercandanya doang, soalnya besoknya langsung naik jabatan jadi CEO (Cuci Elap Ompreng), dengan gaji yang... tetap sama. Wkwkwk. Tapi anehnya rasa lega itu beneran nyata hari ini. Kadang yang dibutuhkan bukan pindah kerjaan sungguhan, cuma ganti label tugas biar kepala nggak keburu burnout duluan. <span class="hashtag">#rebranding</span> <span class="hashtag">#legahariini</span> <span class="hashtag">#ceocuciompreng</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">10.09.26 | 18:00 | Area Cuci & Gudang</div>
+    <h4>Realita Jobdesc CEO: Kompleksitas Operasional</h4>
+    <p>Memasuki hari kedua kerja di posisi baru. Realita memukul keras saat menghadapi debit air yang di luar ekspektasi untuk mencuci 3.600 ompreng. Gaji terakhir sebagai admin ternyata selisihnya hanya 10k dengan posisi sekarang, namun beban kerjanya naik berlipat ganda. Dari mencuci, mengurus PO bahan baku, manajemen stok inventori, penambahan/pengurangan bahan, pemorsian, ngonten, hingga merapikan arsip. Benar-benar beban operasional skala penuh. <span class="hashtag">#realitakerja</span> <span class="hashtag">#multitasking</span> <span class="hashtag">#operasional</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">27.08.26 | 22:30 | Depan Monitor</div>
+    <h4>Engineering Solusi: Dari Label ke Website Gizi</h4>
+    <p>Berawal dari kebingungan mendesain label informasi gizi secara manual, otak akhirnya dipaksa bekerja pada mode full power. Hasilnya jauh melampaui ekspektasi: merakit sebuah website utuh yang otomatis memuat nilai gizi dan kalkulasi kebutuhan nutrisi harian. Ketika dihadapkan pada kebuntuan, membangun sistem baru adalah solusi paling elegan. <span class="hashtag">#problemsolving</span> <span class="hashtag">#webdev</span> <span class="hashtag">#nilaigizi</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">25.08.26 | 11:00 | Birokrasi HR</div>
+    <h4>Mengekstraksi Sisa Aset: Pencairan JHT</h4>
+    <p>Berhadapan dengan kerumitan birokrasi demi mencairkan Jaminan Hari Tua (JHT) dari PT Pora Abadi (Gacoan). Prosesnya sangat berbelit dengan tambahan sesi interview segala, namun algoritma birokrasinya berhasil saya tembus. Dana segar di atas 880k sukses masuk ke rekening, menutup manis sisa aset dari lembaran lama. <span class="hashtag">#klaimJHT</span> <span class="hashtag">#birokrasi</span> <span class="hashtag">#asetcair</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">22.08.26 | 14:00 | Wahana Ekstrem Malang</div>
+    <h4>Restart Sistem: Adrenalin & Optimalisasi Budget</h4>
+    <p>Mengambil waktu ke Malang untuk refreshing dan me-restart kesadaran diri. Dengan modal tiket sangat efisien sebesar 80k, saya berhasil menaklukkan 8 wahana berbeda. Sebuah optimalisasi hiburan yang luar biasa memompa adrenalin, jauh lebih menguntungkan dibanding tempat lain yang biasanya mentok di 5 wahana. Sistem pikiran kembali fresh. <span class="hashtag">#healing</span> <span class="hashtag">#optimalisasibudget</span> <span class="hashtag">#adrenalin</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">22.07.26 | 15:30 | Rute Distribusi</div>
+    <h4>Nostalgia Rute Distribusi</h4>
+    <p>Ikut turun ke lapangan bersama anak-anak untuk distribusi dan mengambil konten. Rute perjalanan ini tanpa sengaja melempar memori kembali ke masa kecil, saat saya sering belajar di area MI 1 dan MAT meski itu bukan sekolah saya. Kombinasi menyelesaikan tugas operasional sekaligus menyusuri rute kenangan membuat hari ini terasa sangat solid dan berkesan. <span class="hashtag">#distribusi</span> <span class="hashtag">#nostalgia</span> <span class="hashtag">#rutemasakecil</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">13.07.26 | 10:00 | Ruang Interview</div>
+    <h4>Eksplorasi Karir & Skor Psikotes</h4>
+    <p>Sempat terlintas ambisi untuk bermanuver menjadi Kepala Toko. Proses seleksi dilalui hingga tahap psikotes dengan perolehan nilai 86/49. Namun, saat memasuki tahap interview, motivasi mendadak drop dan saya memilih mengakhiri sesi dengan statement bahwa saya sudah bekerja di MBG sebagai admin. Sebuah simulasi pengujian market value yang diakhiri dengan anti-klimaks. <span class="hashtag">#psikotes</span> <span class="hashtag">#interview</span> <span class="hashtag">#keputusankarir</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">09.07.26 | 23:00 | Stan Sosis & Minuman</div>
+    <h4>Shift Tambahan: Kolaborasi Lintas Generasi</h4>
+    <p>Dari tanggal 1 hingga 9 Juli, saya mengambil tugas ekstra menjaga stan sosis dan minuman bersama Mbak Mama demi menambah penghasilan. Siklus berjaga sehari semalam benar-benar memeras sisa daya tahan tubuh. Lelah luar biasa, tapi eksekusi proyek sampingan bersama keluarga ini memberikan kepuasan tersendiri. <span class="hashtag">#sidehustle</span> <span class="hashtag">#kolaborasi</span> <span class="hashtag">#ekstrapendapatan</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">28.05.26 | 20:00 | Meja Trading</div>
+    <h4>Uang Kuliah Pasar Modal: Margin Call Pertama</h4>
+    <p>Mulai merambah ke arena trading forex tanpa tameng pelindung. Terlalu percaya diri mengabaikan akun cent, pasar langsung memberikan hukuman brutal. Jutaan rupiah hangus seketika. Sebuah error fatal dalam manajemen risiko yang sangat menyakitkan, tapi ini saya catat sebagai uang kuliah paling mahal untuk memahami struktur probabilitas pasar. <span class="hashtag">#forextrading</span> <span class="hashtag">#boncos</span> <span class="hashtag">#uangsekolah</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">23.05.26 | 10:00 | Dapur MBG</div>
+    <h4>System Overload: Bencana Skala Masif</h4>
+    <p>Krisis terbesar terjadi hari ini. Keputusan menaikkan porsi makan (PM) secara drastis dari 1.500 ke 2.700 berujung pada system failure total karena target produksi tak tercapai. Dampaknya beruntun: ayam membusuk, nasi menumpuk sisa, dan hampir semua makanan terpaksa dibuang. Sebuah pelajaran mahal bahwa memaksakan scaling tanpa kapasitas sistem yang stabil hanya akan berujung pada kehancuran output. <span class="hashtag">#systemcrash</span> <span class="hashtag">#krisisdapur</span> <span class="hashtag">#overload</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">16.05.26 | 22:00 | Resto & Kantor MBG</div>
+    <h4>Babak Akhir & Awal Yang Baru</h4>
+    <p>Hari terakhir di Gacoan. Resmi pamit dan mengucapkan terima kasih atas semua pelajaran, kelelahan, dan kenangan selama bekerja di sini. Sebagai bentuk rasa syukur atas fase baru ini, saya juga membawa oleh-oleh untuk menyapa teman-teman kantor yang baru di MBG. Satu bab tertutup, bab baru resmi dimulai. <span class="hashtag">#hariTerakhir</span> <span class="hashtag">#pindahhaluan</span> <span class="hashtag">#lembarbaru</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">10.05.26 | 08:00 | Antara Dua Dunia</div>
+    <h4>Double Shift & Batas Kemampuan</h4>
+    <p>Fase paling gila dan menguras tenaga. Harus mengurus administrasi MBG di kantor, ngulit ompreng, tapi di sisi lain masih punya kewajiban operasional di Gacoan. Izin cuti, sakit, hingga minta shift sore terpaksa dilakukan karena jadwal yang bentrok. Pernah dalam sehari kerja dua kali tanpa jeda—pagi di MBG, lanjut malam di Gacoan. Bahkan saat libur gacoan dipakai untuk MBG, dan sebaliknya. Tubuh rasanya mau patah, tapi semangat untuk menyelesaikan semuanya dengan baik tetap menyala. <span class="hashtag">#doubleduty</span> <span class="hashtag">#kerjakeras</span> <span class="hashtag">#transisikarir</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">01.05.26 | 13:00 | Dapur Persiapan</div>
+    <h4>Residu Lengket & Bayaran Segenggam Karbohidrat</h4>
+    <p>Fase orientasi dapur ditandai dengan tugas berat: menguliti tutup ompreng yang luar biasa lengket dan alot. Kerja fisik memeras tenaga dari pagi hingga siang yang anehnya tidak diganjar dengan uang, melainkan hanya upah Roti Auka. Sore harinya switch ke sistem operasional Gacoan. Melelahkan, tapi transisi ini membuktikan bahwa manajemen waktu masih bisa dikendalikan. <span class="hashtag">#belajardapur</span> <span class="hashtag">#rotiAuka</span> <span class="hashtag">#manajemenwaktu</span></p>
+</article>
+
+<article class="log-entry log-locked">
+    <div class="log-meta">24.04.26 | 16:00 | Ruang Manager</div>
+    <h4>Langkah Awal Pamitan</h4>
+    <p>Panggilan resmi dari MBG akhirnya datang juga. Hari ini mulai menyiapkan berkas dan surat pengunduran diri dari Gacoan sebelum secara resmi menghadap dan pamit ke Bapak Manager. Rasa campur aduk antara lega dan sedih mulai terasa. <span class="hashtag">#resign</span> <span class="hashtag">#persiapanberalih</span> <span class="hashtag">#pamitan</span></p>
+</article>
+
+<article class="log-entry log-locked">
+                <div class="log-meta">01.04.26 | 13:00 | Diskusi Peluang</div>
+                <h4>Pintu Baru: Program MBG</h4>
+                <p>Mbaku menawarkan posisi sebagai admin di program MBG (Makan Bergizi Gratis). Sebenarnya sudah lama mendaftar di lokasi dekat rumah tapi tidak kunjung dipanggil. Lewat arahan dan bantuan jalur Mbak (AG), saya mulai bertanya-tanya dan belajar seperti apa tugas admin di sana. Prospeknya menarik, dekat dari rumah, dan berkontribusi langsung untuk program pemerintah. <span class="hashtag">#peluangbaru</span> <span class="hashtag">#adminMBG</span> <span class="hashtag">#faseSelanjutnya</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">21.03.26 | 10:40 | Shift Hari Raya</div>
+                <h4>Pagi Eid: Sepi Sebelum Badai</h4>
+                <p>Selesai salat Eid dan maaf-maafan secepatnya dengan keluarga, langsung tancap gas jam 10 pagi agar tidak telat. Sampai di resto jam 10:40, suasananya ternyata masih cukup lengang karena banyak yang mudik. Tapi rasa lelah terbayar beberapa hari setelahnya lewat insentif double pay dan jatah cuti 3 hari yang sangat dinanti. <span class="hashtag">#harihari</span> <span class="hashtag">#doublepay</span> <span class="hashtag">#kembaliBekerja</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">05.03.26 | 21:30 | Dapur & Kasir</div>
+                <h4>Gelombang Pasca-Tarawih</h4>
+                <p>Begitu jamaah selesai tarawih, resto langsung diserbu. Ditambah lagi ada promo event di pertengahan bulan, membuat suasana makin pecah. Capeknya luar biasa. Pernah dalam satu hari bahkan tidak sempat sahur karena waktu yang terlalu sempit—beruntung niat sudah dibaca dari malamnya. <span class="hashtag">#puncakramadhan</span> <span class="hashtag">#serbuanpaskatarawih</span> <span class="hashtag">#ujiansabar</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">19.02.26 | 14:00 | Shift Ramadhan</div>
+                <h4>Ritme Baru di Bulan Suci</h4>
+                <p>Awal Ramadhan membawa ritme kerja baru. Jam kerja berkurang satu jam, total 8 jam sudah bersih dengan istirahat. Hari-hari pertama Ramadhan, suasana malam lumayan tenang dan tidak sepadat biasanya—mungkin orang-orang masih fokus di rumah. Tapi ada harga yang harus dibayar: waktu untuk tarawih dan tadarus terpaksa terlewat karena tugas yang harus diselesaikan. <span class="hashtag">#ramadhan</span> <span class="hashtag">#ritmekerja</span> <span class="hashtag">#suasanabaru</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">11.01.26 | 15:00 | Area Resto</div>
+                <h4>Siklus Datang & Pergi: Fenomena Hari Pertama</h4>
+                <p>Melihat anak-anak baru berdatangan lalu menghilang begitu saja tanpa kabar. Dunia F&B memang sekeras itu. Dulu saya juga ada di posisi mereka—hari pertama langsung kepikiran mau menyerah, ngeluh tiada henti dari seminggu sampai sebulan pertama. Tapi tiap kali mau mundur, ada satu pertanyaan yang selalu menahan langkah: "Kalau berhenti sekarang, mau kerja apa?" Lucu rasanya kalau diingat lagi. <span class="hashtag">#duniafnb</span> <span class="hashtag">#mentalkuat</span> <span class="hashtag">#proses</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">31.12.25 | 19:00 | Kasir & Area Resto</div>
+                <h4>Penonton Pergantian Tahun</h4>
+                <p>Masuk shift jam 7 malam berarti harus merelakan malam tahun baru melayang begitu saja. Dari balik meja dan keramaian resto, saya cuma bisa melihat orang-orang datang merayakan tahun baru dengan tawa mereka. Menyaksikan selebrasi orang lain saat kita sendiri sedang berjibaku dengan kesibukan tempat kerja. <span class="hashtag">#malamtahunbaru</span> <span class="hashtag">#belakanglayar</span> <span class="hashtag">#pekerjafnb</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">20.12.25 | 03:00 | Shift Malam Resto</div>
+                <h4>Ujian Batas Fisik: 24 Jam Tanpa Ampun</h4>
+                <p>Hari di mana ketahanan tubuh benar-benar diuji sampai ke titik terendah. Ada event besar dan resto buka 24 jam nonstop. Dari malam menembus subuh, rasanya seluruh badan mau remuk. Rasa capek, lelah, dan badan mulai meragukan stamina sendiri—benar-benar momen yang bikin mikir, "Bisa lewat gak ya malam ini?" <span class="hashtag">#puncaklelah</span> <span class="hashtag">#shiftmalam</span> <span class="hashtag">#bertahan</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">10.11.25 | 08:00 | Stasiun Minuman</div>
+                <h4>Formula Cair: Presisi Hingga Tetes Terakhir</h4>
+                <p>Hari ini di bar. Belajar resep es teh, Thai tea, Green tea sampai Es Gobak Sodor. Ternyata minuman pun punya 'source code' yang ketat. Takaran gula, sirup, semuanya harus presisi. Sedikit meleset, bukan cuma rasa yang berubah, tapi konsistensi brand. Pelajaran: sistem itu berlaku di semua lini, dari kode sampai ke tetes teh terakhir. <span class="hashtag">#standarisasi</span> <span class="hashtag">#resep</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">29.10.25 | 03:00 | Stasiun Mie</div>
+                <h4>Alkimia Dapur: Antara Takaran dan Muscle Memory</h4>
+                <p>Mencoba meracik mie, ngasih bumbu, minyak, cabe. Lalu 'ngegrindil' dan menakar adonan aci, bagor, pangsit. Ini bukan sekadar masak, ini adalah algoritma yang dieksekusi tangan. Setiap gram bumbu adalah variabel. Tujuannya satu: output yang konsisten ratusan kali sehari. Kecepatan dan ketepatan adalah segalanya. <span class="hashtag">#sistemdapur</span> <span class="hashtag">#konsistensi</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">24.10.25 | 02:30 | Meja Produksi</div>
+                <h4>Logika Lipatan & Kecepatan Produksi</h4>
+                <p>Fokus di stasiun dimsum. Belajar cara bikin, masak, sampai mengemas. Melipat pangsit itu ternyata bukan soal seni, tapi soal efisiensi. Setiap detik berharga. Ini adalah pelajaran tentang *muscle memory* dan bagaimana mengubah gerakan berulang menjadi output yang cepat dan seragam. <span class="hashtag">#efisiensi</span> <span class="hashtag">#dapurpanas</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">11.10.25 | 08:00 | Lantai Servis Gacoan</div>
+                <h4>Baris Terdepan: Eksekusi di Tengah Kekacauan</h4>
+                <p>Meskipun tujuan utama belajar di dapur, hari ini saya adalah service crew. Menghadapi pelanggan, menjelaskan menu, menerima komplain. Ini adalah debugging *real-time* dengan manusia. Belajar bahwa sistem yang bagus di dapur bisa percuma tanpa eksekusi yang solid di garis depan. <span class="hashtag">#frontliner</span> <span class="hashtag">#belajarsabar</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">09.10.25 | 09:10 | Depan Notifikasi HP</div>
+                <h4>Panggilan ke Medan Perang Baru: Gacoan</h4>
+                <p>Notifikasi masuk. Diterima di Gacoan. Hasil dari puluhan lamaran, satu penolakan, dan persiapan matang. Ini bukan keberuntungan, ini adalah konversi dari volume eksekusi. Tiket masuk ke sistem skala besar sudah di tangan. Waktunya membongkar, belajar, dan mengeksekusi. Game on. <span class="hashtag">#kerjabaru</span> <span class="hashtag">#eksekusiberhasil</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">02.10.25 | 18:10 | Depan Tumpukan Berkas</div>
+                <h4>Deployment ke Gacoan: Fase Persiapan Berkas</h4>
+                <p>Panggilan interview Gacoan sudah di tangan. Sekarang fase eksekusi administrasi. Siapin semua berkas, fotokopi, CV yang di-update. Tahap ini sering diremehkan, padahal satu dokumen yang salah bisa menggagalkan semua proses. Detail kecil adalah segalanya. Pastikan semua *dependencies* terpenuhi. <span class="hashtag">#persiapan</span> <span class="hashtag">#detailpenting</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">15.09.25 | 21:40 | Dapur Pelatihan</div>
+                <h4>Dari Adonan Sampai Angka HPP</h4>
+                <p>Pelatihan roti & kue selesai. Bukan cuma soal tekstur dan rasa. Pelajaran terbesarnya adalah menghitung HPP (Harga Pokok Penjualan). Setiap gram tepung, setiap butir telur, adalah data. Ternyata, sebuah kue yang enak adalah hasil dari dua hal: resep yang presisi dan perhitungan biaya yang cermat. <span class="hashtag">#belajarbaking</span> <span class="hashtag">#bisniskuliner</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">21.08.25 | 07:30 | Ruang Teori</div>
+                <h4>OS Dapur: Disiplin, Etos Kerja & P3K</h4>
+                <p>Materi hari ini bukan soal resep, tapi soal 'Operating System' dapur. Sesi tentang disiplin, etos kerja, dan P3K. Awalnya terdengar seperti basa-basi, tapi langsung sadar: dapur profesional itu lingkungan berisiko tinggi. Tanpa protokol keamanan (P3K) dan etos kerja yang solid, resep sebagus apapun bisa gagal dieksekusi. Ini adalah fondasi sebelum fondasi. <span class="hashtag">#safetyfirst</span> <span class="hashtag">#mindset</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">11.08.25 | 08:00 | Gerbang BLK</div>
+                <h4>Tiket Disetor: Investasi Waktu untuk Skill Baru</h4>
+                <p>Hari penyetoran berkas BLK. Ijazah sudah di tangan, hafalan tahlil sudah di kepala. Semua syarat terpenuhi. Mendaftar di sini bukan rencana cadangan, tapi investasi sadar untuk menambah amunisi. Gacoan, toko haji, BLK—semua adalah jalur yang dieksekusi bersamaan. Jangan pernah taruh semua telur dalam satu keranjang. <span class="hashtag">#investasisendiri</span> <span class="hashtag">#upgrade</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">09.08.25 | 09:10 | Kamar</div>
+                <h4>Kunci Terakhir Telah Didapat: Ijazah Fisik</h4>
+                <p>Akhirnya ijazah fisik di tangan. Selembar kertas ini bukan piala, tapi kunci. Kunci untuk membuka pintu-pintu yang tadinya tertutup, seperti pendaftaran BLK. Menunggu itu menyiksa, tapi persiapan selama menunggu adalah strategi. Sekarang, semua amunisi lengkap. Siap bergerak ke level selanjutnya. <span class="hashtag">#amunisi</span> <span class="hashtag">#siapbergerak</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">28.07.25 | 19:00 | Depan Meja Belajar</div>
+                <h4>Menghafal 'API' Doa: Persiapan Sebelum Perang</h4>
+                <p>Ijazah belum keluar, tapi syarat masuk BLK sudah jelas: hafalan tahlil dan doanya. Susah? Jelas. Tapi ini adalah parameter yang harus dilewati. Anggap saja sedang mempelajari dokumentasi 'API' baru. Tidak perlu dipahami sepenuhnya, yang penting bisa dieksekusi dengan benar saat tes. Eksekusi dulu, pemahaman menyusul. <span class="hashtag">#persiapan</span> <span class="hashtag">#mentalbaja</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">25.07.25 | 10:30 | Ruang Interview & 7 Hari Penantian</div>
+                <h4>Sinyal Error yang Membangun: Validasi di Jalur yang Salah</h4>
+                <p>HRD-nya seperti debugger. Dia bilang skill saya tidak cocok untuk toko, tapi sangat pas untuk posisi teknis di bagian komputer atau jaringan. Intinya: skill set saya salah 'di-deploy' ke 'environment' yang salah. Masa tunggu 7 hari tanpa kabar hanyalah konfirmasi. Request timeout. Operasi gagal. Ini bukan kegagalan, tapi validasi paling jujur dari pasar. Sinyal untuk berhenti memaksakan diri di jalur A dan fokus penuh pada jalur B (teknik & sistem). Energi dialihkan. <span class="hashtag">#marketfeedback</span> <span class="hashtag">#pivot</span> <span class="hashtag">#validasi</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">08.07.25 | Panggung Kelulusan</div>
+                <h4>Bab Ditutup, Peringkat #1 Hanyalah Angka Awal</h4>
+                <p>Hari pembagian hadiah. Resmi jadi nomor satu di angkatan. Rasanya senang, tapi singkat. Karena di dunia nyata, peringkat ini hanyalah data di baris pertama CV. Ini adalah akhir dari satu game, dan awal dari game yang jauh lebih besar dan brutal. Medan perang yang sesungguhnya baru saja dimulai. <span class="hashtag">#gamebaru</span> <span class="hashtag">#buktieksekusi</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">20.06.25 | 23:10 | Di Antara Puluhan Lamaran</div>
+                <h4>Menembak di Kegelapan: Eksekusi Tanpa Peta</h4>
+                <p>Fase bingung. Ijazah belum ada, tapi lamaran harus jalan. Kirim lebih dari 20 lamaran kerja. Banyak yang tidak direspons. Rasanya seperti menembak di kegelapan. Tapi inilah satu-satunya cara melawan ketidakpastian: dengan volume eksekusi. Satu dari puluhan tembakan pasti ada yang kena. <span class="hashtag">#hustle</span> <span class="hashtag">#fasebingung</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">21.06.25 | 21:40 | Depan Laptop</div>
+                <h4>Debugging Bot Sambil Mikirin Resep Chili Oil</h4>
+                <p>Anehnya, solusi untuk bug di fungsi A terkadang muncul saat otak sedang memikirkan komposisi bawang dan minyak di resep B. Multitasking pikiran itu nyata. <span class="hashtag">#refleksi</span> <span class="hashtag">#ngodingmalam</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">10.06.25 | 07:15 | Pasar Pagi</div>
+                <h4>Harga Cabai & Volatilitas Pasar</h4>
+                <p>Hari ini belajar bahwa pasar tradisional lebih fluktuatif dari pasar crypto. Harga cabai naik 30% dalam semalam. Pelajaran: selalu siapkan buffer modal. <span class="hashtag">#tantanganjualan</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">05.06.25 | 18:30 | Meja Makan</div>
+                <h4>Gagal Itu Data</h4>
+                <p>Eksperimen chili oil batch pertama terlalu pedas. Pelanggan komplain. Ini bukan kegagalan, ini data gratis tentang selera pasar. Ulangi, perbaiki, eksekusi lagi. <span class="hashtag">#belajarbisnis</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">01.06.25 | 01:00 | Kamar</div>
+                <h4>Eureka Moment di Tengah Malam</h4>
+                <p>Akhirnya paham cara kerja 'pointer' di C++. Rasanya seperti membuka kunci rahasia alam semesta. Hal-hal seperti ini yang membuat begadang terasa sepadan. <span class="hashtag">#zonabelajar</span></p>
+            </article>
+<article class="log-entry log-locked">
+                <div class="log-meta">28.05.25 | 15:00 | Coffee Shop</div>
+                <h4>Diskusi Ide Liar</h4>
+                <p>Bertemu teman dan membahas ide membuat platform lelang ide. 99% tidak akan dieksekusi, tapi 1% percakapan itu men-trigger ide lain yang lebih realistis. Jaringan adalah katalisator. <span class="hashtag">#network</span></p>
+            </article>        </div>
+        <div class="logbook-unlock-wrap">
+            <button type="button" class="coming-soon-btn" id="logbook-unlock-btn" style="cursor:pointer;">
+                <span class="shine-effect"></span>
+                <span>🔒 BUKA SEMUA LOGBOOK</span>
+            </button>
+            <small style="display:block; margin-top:0.6rem; color: var(--text-secondary); font-size:0.72rem; text-transform:uppercase; letter-spacing:1px;">Akses Berbayar</small>
+        </div>
+      </section>
+      
+      
+      
+      <!-- 5. ZONA BELAJAR — REDESIGN -->
+      <section id="belajar" class="page-section">
+        <h2 class="section-title">Arena Pengetahuan</h2>
+        <p class="section-intro">Bukan sekadar daftar topik. Ini adalah medan latihan nyata — setiap skill diukur, setiap progres dicatat.</p>
+
+        <!-- TAB FILTER -->
+        <div class="skill-tabs">
+            <button class="skill-tab active" data-category="all">Mau Belajar Apa?</button>
+            <button class="skill-tab" data-category="infra">Infrastruktur</button>
+            <button class="skill-tab" data-category="code">Kode & Web</button>
+            <button class="skill-tab" data-category="ai">AI & Otomasi</button>
+            <button class="skill-tab" data-category="trading">Trading & Market</button>
+        </div>
+
+        <!-- SKILL GRID -->
+        <div class="skill-arena-grid">
+
+            <!-- === INFRA === -->
+            <a href="learning/belajar-linux.html" class="skill-arena-card" data-category="infra">
+                <div class="skill-card-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap infra-color"><i data-feather="terminal"></i></div>
+                    <div class="skill-info">
+                        <h4>Linux & CLI</h4>
+                        <span class="skill-sub">Navigasi sistem tanpa GUI</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 65%"></div></div>
+                            <span class="skill-percent">65%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge aktif-badge">AKTIF</span>
+                </div>
+            </a>
+
+            <a href="learning/belajar-docker.html" class="skill-arena-card" data-category="infra">
+                <div class="skill-card-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap infra-color"><i data-feather="box"></i></div>
+                    <div class="skill-info">
+                        <h4>Docker</h4>
+                        <span class="skill-sub">Kontainerisasi aplikasi</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 40%"></div></div>
+                            <span class="skill-percent">40%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge aktif-badge">AKTIF</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Manajemen+VPS&sub=Jadi+sysadmin+diri+sendiri&category=infra" class="skill-arena-card locked" data-category="infra">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap infra-color muted"><i data-feather="server"></i></div>
+                    <div class="skill-info">
+                        <h4>Manajemen VPS</h4>
+                        <span class="skill-sub">Jadi sysadmin diri sendiri</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 0%"></div></div>
+                            <span class="skill-percent">0%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <!-- === KODE & WEB === -->
+            <a href="learning/coming-soon.html?topic=Fundamental+Pemrograman&sub=Logika,+struktur+data,+algoritma&category=code" class="skill-arena-card locked" data-category="code">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap code-color muted"><i data-feather="code"></i></div>
+                    <div class="skill-info">
+                        <h4>Fundamental Pemrograman</h4>
+                        <span class="skill-sub">Logika, struktur data, algoritma</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 20%"></div></div>
+                            <span class="skill-percent">20%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Modern+Front-End&sub=React+/+Vue+untuk+antarmuka&category=code" class="skill-arena-card locked" data-category="code">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap code-color muted"><i data-feather="layout"></i></div>
+                    <div class="skill-info">
+                        <h4>Modern Front-End</h4>
+                        <span class="skill-sub">React / Vue untuk antarmuka</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 10%"></div></div>
+                            <span class="skill-percent">10%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Database+%26+Back-End&sub=Menghidupkan+data&category=code" class="skill-arena-card locked" data-category="code">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap code-color muted"><i data-feather="database"></i></div>
+                    <div class="skill-info">
+                        <h4>Database & Back-End</h4>
+                        <span class="skill-sub">Menghidupkan data</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 0%"></div></div>
+                            <span class="skill-percent">0%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <!-- === AI & OTOMASI === -->
+            <a href="learning/belajar-promt.html" class="skill-arena-card" data-category="ai">
+                <div class="skill-card-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap ai-color"><i data-feather="pen-tool"></i></div>
+                    <div class="skill-info">
+                        <h4>Prompt Engineering</h4>
+                        <span class="skill-sub">Seni berbicara dengan mesin</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 55%"></div></div>
+                            <span class="skill-percent">55%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge aktif-badge">AKTIF</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Dasar+Machine+Learning&sub=Membuat+mesin+berpikir&category=ai" class="skill-arena-card locked" data-category="ai">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap ai-color muted"><i data-feather="cpu"></i></div>
+                    <div class="skill-info">
+                        <h4>Dasar Machine Learning</h4>
+                        <span class="skill-sub">Membuat mesin berpikir</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 5%"></div></div>
+                            <span class="skill-percent">5%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Otomasi+Google+Sheets+%26+Bot&sub=App+Script+%26+auto-responder&category=ai" class="skill-arena-card locked" data-category="ai">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap ai-color muted"><i data-feather="zap"></i></div>
+                    <div class="skill-info">
+                        <h4>Otomasi Google Sheets & Bot</h4>
+                        <span class="skill-sub">App Script & auto-responder</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 30%"></div></div>
+                            <span class="skill-percent">30%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <!-- === TRADING & MARKET === -->
+            <a href="learning/belajar-trading-dasar.html#teknikal" class="skill-arena-card" data-category="trading">
+                <div class="skill-card-glow trading-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color"><i data-feather="trending-up"></i></div>
+                    <div class="skill-info">
+                        <h4>Analisis Teknikal</h4>
+                        <span class="skill-sub">Membaca chart, pola, konfluensi</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 35%"></div></div>
+                            <span class="skill-percent">35%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge demo-badge">DEMO</span>
+                </div>
+            </a>
+
+            <a href="learning/belajar-trading-dasar.html#risk" class="skill-arena-card" data-category="trading">
+                <div class="skill-card-glow trading-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color"><i data-feather="shield"></i></div>
+                    <div class="skill-info">
+                        <h4>Risk Management</h4>
+                        <span class="skill-sub">RR ratio, position sizing, stop loss</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 20%"></div></div>
+                            <span class="skill-percent">20%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge demo-badge">DEMO</span>
+                </div>
+            </a>
+
+            <a href="learning/belajar-trading-dasar.html#journal" class="skill-arena-card" data-category="trading">
+                <div class="skill-card-glow trading-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color"><i data-feather="book-open"></i></div>
+                    <div class="skill-info">
+                        <h4>Trading Journal & Psikologi</h4>
+                        <span class="skill-sub">Disiplin, konsistensi, pola pikir</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 15%"></div></div>
+                            <span class="skill-percent">15%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge demo-badge">DEMO</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Fundamental+Crypto+%26+Web3&sub=Blockchain,+tokenomics,+market+cap&category=trading" class="skill-arena-card locked" data-category="trading">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color muted"><i data-feather="share-2"></i></div>
+                    <div class="skill-info">
+                        <h4>Fundamental Crypto & Web3</h4>
+                        <span class="skill-sub">Blockchain, tokenomics, market cap</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 10%"></div></div>
+                            <span class="skill-percent">10%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <!-- [BARU] Tambahan kartu trading -->
+            <a href="learning/belajar-trading-dasar.html#plan" class="skill-arena-card" data-category="trading">
+                <div class="skill-card-glow trading-glow"></div>
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color"><i data-feather="clipboard"></i></div>
+                    <div class="skill-info">
+                        <h4>Trading Plan & Backtesting</h4>
+                        <span class="skill-sub">Rencana tertulis sebelum entry</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 10%"></div></div>
+                            <span class="skill-percent">10%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge demo-badge">DEMO</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Order+Execution+%26+Market+Structure&sub=Market,+limit,+stop+order,+orderflow&category=trading" class="skill-arena-card locked" data-category="trading">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color muted"><i data-feather="layers"></i></div>
+                    <div class="skill-info">
+                        <h4>Order Execution & Market Structure</h4>
+                        <span class="skill-sub">Market, limit, stop order, orderflow</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 0%"></div></div>
+                            <span class="skill-percent">0%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+            <a href="learning/coming-soon.html?topic=Bot+%26+Algorithmic+Trading&sub=Otomasi+strategi+pakai+kode&category=trading" class="skill-arena-card locked" data-category="trading">
+                <div class="skill-card-inner">
+                    <div class="skill-icon-wrap trading-color muted"><i data-feather="cpu"></i></div>
+                    <div class="skill-info">
+                        <h4>Bot & Algorithmic Trading</h4>
+                        <span class="skill-sub">Otomasi strategi pakai kode</span>
+                        <div class="skill-progress-wrap">
+                            <div class="skill-progress-bar"><div class="skill-progress-fill trading-fill" style="width: 0%"></div></div>
+                            <span class="skill-percent">0%</span>
+                        </div>
+                    </div>
+                    <span class="skill-status-badge soon-badge">SOON</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- BAGIAN PREMIUM — [DIAKTIFKAN] sekarang bisa diklik, buka popup kode akses -->
+        <div class="learning-path premium-section" style="margin-top: 5rem;">
+            <h3>Knowledge Base <span class="premium-badge animated-badge">PREMIUM</span></h3>
+            <div class="premium-card-wrapper">
+                <div class="moving-border"></div>
+                <div class="premium-teaser-card" id="kb-teaser-card">
+                    <div class="teaser-content" id="kb-teaser-content">
+                        <div class="teaser-icon"><i data-feather="lock"></i></div>
+                        <h4 class="gold-text">Akses SOP & Resep Komersial</h4>
+                        <p>Panduan lengkap operasional dapur skala besar. Mulai dari manajemen stok, teknik memasak presisi, hingga formulasi minuman.</p>
+                        <div class="coming-soon-container">
+                            <button type="button" class="coming-soon-btn" id="kb-unlock-btn" style="cursor: pointer; border: none;">
+                                <span class="shine-effect"></span>
+                                <span>MASUKKAN KODE AKSES</span>
+                            </button>
+                            <small>Akses Berbayar</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      </section>
+
+    </main>
+    <!-- KONTEN UTAMA SELESAI DI SINI -->
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <p class="footer-quote">"Hidup bukan hanya soal menjadi besar, tapi soal menjadi benar dan utuh."</p>
+        <p class="copyright">© Fayazi 2025 — Dibangun dengan Kode & Keringat.</p>
+    </footer>
+
+    <!-- [BARU] Popup kode akses untuk data Mingguan/Bulanan -->
+    <div id="code-gate-overlay" class="code-gate-overlay hidden-gate">
+        <div class="code-gate-card">
+            <div class="code-gate-icon"><i data-feather="lock"></i></div>
+            <h4 id="code-gate-title">Data Terkunci</h4>
+            <p class="code-gate-sub">Masukkan kode akses untuk lihat data ini.</p>
+            <input type="text" id="code-gate-input" class="code-gate-input" placeholder="Kode akses...">
+            <div id="code-gate-error" class="code-gate-error"></div>
+            <div class="code-gate-actions">
+                <button class="code-gate-btn secondary" id="code-gate-cancel">Batal</button>
+                <button class="code-gate-btn primary" id="code-gate-submit">Buka</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- [BARU] Popup paywall bercandaan kalau kode salah terus — dipakai bareng oleh ketiga gate -->
+    <div id="paywall-overlay" class="code-gate-overlay hidden-gate">
+        <div class="code-gate-card paywall-card">
+            <div class="paywall-icon">💳</div>
+            <h4>Kode Nggak Ketemu?</h4>
+            <p class="code-gate-sub">Tenang, ada jalan pintas. Langganan sekarang cuma <strong class="paywall-price">Rp49.000<span>/bulan</span></strong> buat akses instan* ke <span id="paywall-target-text">semua konten terkunci</span>.</p>
+            <p class="paywall-disclaimer">*Instan dalam artian nggak akan pernah diproses — ini cuma bercanda. Kalau emang butuh kodenya beneran, hubungi saya langsung 👇</p>
+            <a href="https://wa.me/6285856527457?text=Halo, Saya mau minta kode akses web nya anda, Terima Kasih" target="_blank" class="code-gate-btn primary" style="display:block; text-decoration:none; margin-bottom: 8px;">💬 Chat Saya di WhatsApp</a>
+            <button class="code-gate-btn secondary" id="paywall-close" style="width: 100%;">Oke, Paham 😂</button>
+        </div>
+    </div>
+
+    <!-- [BARU] Popup kode akses untuk buka semua Logbook -->
+    <div id="logbook-gate-overlay" class="code-gate-overlay hidden-gate">
+        <div class="code-gate-card">
+            <div class="code-gate-icon"><i data-feather="lock"></i></div>
+            <h4>Arsip Logbook Terkunci</h4>
+            <p class="code-gate-sub">Masukkan kode akses untuk buka semua entry logbook dari awal.</p>
+            <input type="text" id="logbook-gate-input" class="code-gate-input" placeholder="Kode akses...">
+            <div id="logbook-gate-error" class="code-gate-error"></div>
+            <div class="code-gate-actions">
+                <button class="code-gate-btn secondary" id="logbook-gate-cancel">Batal</button>
+                <button class="code-gate-btn primary" id="logbook-gate-submit">Buka</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- [BARU] Popup kode akses untuk Knowledge Base Premium (SOP & Resep Komersial) -->
+    <div id="kb-gate-overlay" class="code-gate-overlay hidden-gate">
+        <div class="code-gate-card">
+            <div class="code-gate-icon"><i data-feather="lock"></i></div>
+            <h4>Konten Berbayar</h4>
+            <p class="code-gate-sub">Masukkan kode akses untuk membuka SOP & Resep Komersial.</p>
+            <input type="text" id="kb-gate-input" class="code-gate-input" placeholder="Kode akses...">
+            <div id="kb-gate-error" class="code-gate-error"></div>
+            <div class="code-gate-actions">
+                <button class="code-gate-btn secondary" id="kb-gate-cancel">Batal</button>
+                <button class="code-gate-btn primary" id="kb-gate-submit">Buka</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="style&script/script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
