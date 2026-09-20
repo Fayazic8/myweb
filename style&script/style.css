@@ -1,0 +1,684 @@
+/* ==========================================================
+// KODE CSS LENGKAP - style.css (Versi Final dengan Tooltip di Kiri)
+// ========================================================== */
+
+/* --- VARIABLES & GLOBAL STYLES --- */
+:root {
+    --bg-main: #12181F;
+    --bg-alt: #19212A;
+    --text-primary: #E1E1E1;
+    --text-secondary: #8D949C;
+    --accent-blue: #4A90E2;
+    --accent-bronze: #AE8B61;
+    --status-green: #2ECC71;
+    --status-red: #E74C3C;
+    --border-color: rgba(141, 148, 156, 0.2);
+    --font-heading: 'Source Serif Pro', serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* --- BASIC SETUP --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+/* --- REUSABLE COMPONENTS --- */
+.page-section { padding: 100px 5%; }
+.bg-alt { background-color: var(--bg-alt); }
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--accent-blue);
+}
+.section-intro {
+    text-align: center;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 60px auto;
+}
+
+/* --- ANIMATION ON SCROLL --- */
+.page-section, .jejak-card, .proyek-card, .log-entry {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.page-section.active, .jejak-card.active, .proyek-card.active, .log-entry.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+.jejak-card:nth-child(2) { transition-delay: 200ms; }
+
+/* --- HEADER --- */
+.main-header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background-color: rgba(18, 24, 31, 0.8); backdrop-filter: blur(10px); z-index: 100; }
+.logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--text-primary); position: relative; display: inline-block; padding-right: 5px; }
+.logo:hover { color: var(--accent-blue); }
+#typing-logo::after { content: '|'; position: absolute; right: -2px; color: var(--accent-blue); animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { color: var(--accent-blue); } from, to { color: transparent; } }
+.main-nav { display: flex; gap: 1.5rem; }
+.main-nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+.main-nav a:hover { color: var(--text-primary); }
+.menu-toggle { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; }
+
+/* --- HERO SECTION --- */
+.hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 5%; background: linear-gradient(rgba(18, 24, 31, 0.5), rgba(18, 24, 31, 1)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1740&auto=format&fit=crop'); background-size: cover; background-position: center; }
+.hero-content h1, .hero-content .manifesto { opacity: 0; animation-fill-mode: forwards; animation-duration: 1.2s; animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1); animation-name: animateInUp; }
+@keyframes animateInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.hero-content h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 6.5vw, 4.5rem); letter-spacing: 2px; color: #fff; margin-bottom: 1rem; animation-delay: 0.5s; }
+.hero-content .manifesto { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; animation-delay: 0.8s; }
+
+/* --- TENTANG --- */
+.tentang-container { max-width: 900px; margin: 0 auto; }
+.tentang-teks .prinsip-quote { font-family: var(--font-heading); font-size: 1.25rem; border-left: 3px solid var(--accent-blue); padding-left: 1.5rem; margin: 2rem 0; color: var(--text-primary); font-style: italic; }
+.tentang-galeri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+.galeri-item { height: 250px; background-size: cover; background-position: center; filter: grayscale(80%); transition: filter 0.4s; }
+.galeri-item:hover { filter: grayscale(0%); }
+
+/* --- JEJAK --- */
+.jejak-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto; }
+.jejak-container--single { grid-template-columns: 1fr; max-width: 480px; }
+.jejak-card { position: relative; text-decoration: none; color: var(--text-primary); border-radius: 12px; background: linear-gradient(145deg, var(--bg-main), #1e2833); padding: 2px; transition: transform 0.3s ease-out; }
+.jejak-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 12px; z-index: 0; background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(74, 144, 226, 0.3), transparent 40%); opacity: 0; transition: opacity 0.4s; }
+.jejak-card:hover::before { opacity: 1; }
+.jejak-card:hover { transform: translateY(-8px); }
+.jejak-card-content { position: relative; z-index: 1; background-color: var(--bg-alt); padding: 2rem; border-radius: 10px; height: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.jejak-icon-wrapper { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(145deg, var(--accent-blue), #3a7bc8); display: grid; place-items: center; margin-bottom: 1.5rem; color: #fff; }
+.jejak-icon-wrapper i { width: 32px; height: 32px; }
+.jejak-card-content h3 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; }
+.jejak-role { color: var(--accent-bronze); font-weight: 500; margin-bottom: 1rem; }
+.jejak-desc { color: var(--text-secondary); flex-grow: 1; margin-bottom: 2rem; }
+.jejak-action { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-primary); font-weight: 500; }
+.jejak-action i { transition: transform 0.3s; }
+.jejak-card:hover .jejak-action i { transform: translateX(5px); }
+
+/* --- PROYEK --- */
+.proyek-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+.proyek-card { background-color: var(--bg-main); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 8px; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; }
+.proyek-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.card-header { display: flex; justify-content: space-between; align-items: baseline; }
+.card-header h3 { font-family: var(--font-heading); color: var(--text-primary); margin-bottom: 0.5rem; }
+.status-tag { font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.status-tag.aktif { background-color: var(--accent-blue); color: #fff; }
+.status-tag.selesai { background-color: var(--status-green); color: #fff; }
+.status-tag.eksperimen { background-color: var(--accent-bronze); color: var(--bg-main); }
+.status-tag.gagal { background-color: var(--status-red); color: #fff; }
+.proyek-card p { color: var(--text-secondary); flex-grow: 1; margin: 1rem 0; }
+.tech-stack { display: flex; gap: 1rem; color: var(--text-secondary); }
+
+/* --- CATATAN --- */
+.log-timeline { max-width: 700px; margin: 0 auto; border-left: 2px solid var(--border-color); padding-left: 2rem; }
+.log-entry { margin-bottom: 3rem; position: relative; }
+
+.log-entry::before { content: ''; position: absolute; left: -2.4rem; top: 5px; width: 10px; height: 10px; background-color: var(--accent-bronze); border-radius: 50%; }
+.log-meta { font-size: 0.9rem; color: var(--accent-bronze); margin-bottom: 0.5rem; font-weight: 500; }
+.log-entry h4 { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.5rem; }
+.log-entry.hidden { display: none; }
+.load-more-btn { display: none; margin: 2rem auto 0; padding: 0.75rem 1.5rem; background-color: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); font-family: var(--font-body); font-weight: 500; font-size: 0.9rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+.load-more-btn:hover { background-color: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+
+/* --- ZONA BELAJAR --- */
+ .belajar-container { max-width: 900px; margin: 0 auto; text-align: center; }
+   . , ,     q,.learning-path { margin-bottom: 4rem; }
+.learning-path:last-child { margin-bottom: 0; }
+.learning-path h3 { font-family: var(--font-heading); color: var(--accent-blue); font-size: 1.5rem; margin-bottom: 2rem; text-align: center; position: relative; padding-bottom: 1rem; }
+.learning-path h3::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 1px; background-color: var(--border-color); }
+.belajar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+.belajar-card { background-color: var(--bg-main); border: 1px solid var(--border-color); padding: 2rem; border-radius: 8px; text-align: center; text-decoration: none; color: var(--text-primary); transition: transform 0.3s, border-color 0.3s; position: relative; overflow: hidden; }
+.belajar-card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
+.belajar-card i { color: var(--accent-blue); margin-bottom: 1rem; width: 48px; height: 48px; }
+.belajar-card h4 { font-family: var(--font-heading); font-size: 1.2rem; }
+.belajar-card span { font-size: 0.9rem; color: var(--text-secondary); }
+.belajar-card.coming-soon { opacity: 0.6; pointer-events: none; user-select: none; }
+.belajar-card.coming-soon:hover { transform: none; box-shadow: none; }
+.belajar-card.coming-soon::after { content: 'SEGERA HADIR'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-10deg); background-color: #f56565; color: #fff; padding: 6px 14px; border-radius: 4px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; z-index: 10; }
+
+/* --- SKILL ARENA (ZONA BELAJAR REDESIGN) --- */
+
+.skill-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 3rem;
+}
+
+.skill-tab {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+}
+
+.skill-tab:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+}
+
+.skill-tab.active {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #fff;
+}
+
+.skill-tab[data-category="trading"].active {
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+    color: var(--bg-main);
+}
+
+.skill-arena-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.skill-arena-card {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-alt);
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, opacity 0.4s ease;
+}
+
+.skill-arena-card:not(.locked):hover {
+    transform: translateY(-4px);
+    border-color: rgba(74, 144, 226, 0.5);
+}
+
+.skill-arena-card.locked {
+    cursor: pointer;
+    opacity: 0.55;
+}
+
+.skill-arena-card.hidden-by-filter {
+    display: none;
+}
+
+/* Glowing hover effect */
+.skill-card-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(74, 144, 226, 0.12), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+}
+
+.skill-arena-card:not(.locked):hover .skill-card-glow {
+    opacity: 1;
+}
+
+.trading-glow {
+    background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.12), transparent 70%);
+}
+
+.skill-card-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+}
+
+.skill-icon-wrap {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skill-icon-wrap i {
+    width: 22px;
+    height: 22px;
+}
+
+.infra-color   { background: rgba(74, 144, 226, 0.12); color: #4A90E2; }
+.code-color    { background: rgba(46, 204, 113, 0.12); color: #2ECC71; }
+.ai-color      { background: rgba(174, 139, 97, 0.12); color: #AE8B61; }
+.trading-color { background: rgba(212, 175, 55, 0.12); color: #D4AF37; }
+.muted         { opacity: 0.5; }
+
+.skill-info {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.skill-info h4 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.skill-sub {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.skill-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skill-progress-bar {
+    flex-grow: 1;
+    height: 5px;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.skill-progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--accent-blue), #6bb3f7);
+    border-radius: 10px;
+    transition: width 1s ease;
+}
+
+.trading-fill {
+    background: linear-gradient(to right, #AE8B61, #D4AF37);
+}
+
+.skill-percent {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    min-width: 28px;
+    text-align: right;
+}
+
+/* Status badges on cards */
+.skill-status-badge {
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    align-self: flex-start;
+}
+
+.aktif-badge { background-color: var(--accent-blue); color: #fff; }
+.soon-badge  { background-color: rgba(255,255,255,0.08); color: var(--text-secondary); }
+.demo-badge  { background-color: rgba(212, 175, 55, 0.15); color: #D4AF37; border: 1px solid rgba(212,175,55,0.3); }
+
+/* --- FOOTER --- */
+.main-footer { text-align: center; padding: 3rem 5%; border-top: 1px solid var(--border-color); }
+.footer-quote { font-style: italic; color: var(--text-secondary); }
+.copyright { font-size: 0.9rem; margin-top: 1rem; }
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    .page-section { padding: 80px 5%; }
+    .main-nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--bg-alt); flex-direction: column; padding: 1rem 0; text-align: center; }
+    .main-nav.active { display: flex; }
+    .main-nav a { padding: 1rem 0; }
+    .menu-toggle { display: block; }
+    .section-title { font-size: 2rem; }
+    .hero h1 { font-size: clamp(2rem, 4vw, 4rem); line-height: 1.3; }
+    .hero .manifesto { font-size: 1rem; }
+    .tentang-galeri { grid-template-columns: 1fr; }
+}
+
+/* --- [FINAL] GAYA BARU UNTUK DASHBOARD FINANSIAL --- */
+
+.view-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+.switcher-btn {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.switcher-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+}
+.switcher-btn.active {
+    background-color: var(--accent-blue);
+    color: #fff;
+    border-color: var(--accent-blue);
+}
+.switcher-btn--premium:not(.active) {
+    background: linear-gradient(110deg, rgba(140,106,69,0.25) 0%, rgba(212,175,55,0.25) 50%, rgba(140,106,69,0.25) 100%);
+    border-color: rgba(212,175,55,0.5);
+    color: #D4AF37;
+}
+.switcher-btn--premium:not(.active):hover {
+    border-color: #D4AF37;
+    color: #FFF8DC;
+}
+
+.finansial-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.dashboard-card {
+    background-color: var(--bg-alt);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+}
+
+/* --- PERBAIKAN TOTAL UNTUK IKON & TOOLTIP --- */
+.card-header-finansial {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center vertikal judul dan ikon */
+    margin-bottom: 0.5rem;
+}
+.tooltip-trigger {
+    position: relative;
+    cursor: help;
+    /* Membuat ikon (?) center di dalam lingkaran */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px; 
+    height: 22px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transition: background-color 0.2s ease-in-out;
+}
+.tooltip-trigger:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Kotak tooltip yang muncul di sebelah KIRI */
+.tooltip-trigger .tooltip-text {
+    visibility: hidden;
+    width: 240px; /* Lebar kotak pemberitahuan */
+    background-color: #1a2a3a;
+    color: #e0e0e0;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px 14px;
+    position: absolute;
+    z-index: 10;
+    
+    /* --- INI LOGIKA KUNCI-NYA --- */
+    top: 50%; /* Posisikan 50% dari atas induknya */
+    right: 100%; /* Tempelkan sisi kanan tooltip ke sisi kiri induknya */
+    margin-right: 12px; /* Tambahkan spasi/jarak yang Anda minta */
+    transform: translateY(-50%); /* Geser ke atas 50% dari TINGGI DIRINYA SENDIRI agar center sempurna */
+    
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 13px;
+    line-height: 1.5;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Munculkan tooltip saat di-hover */
+.tooltip-trigger:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Panah kecil yang menunjuk ke kanan */
+.tooltip-trigger .tooltip-text::after {
+    content: "";
+    position: absolute;
+    
+    /* Posisikan panah di sisi kanan tooltip */
+    left: 100%; 
+    top: 50%;
+    transform: translateY(-50%);
+
+    /* Buat bentuk panah menunjuk ke kanan */
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #1a2a3a;
+}
+/* --- AKHIR DARI PERBAIKAN TOOLTIP --- */
+
+.dashboard-card .angka-besar {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+}
+.angka-pemasukan { color: var(--status-green); }
+.angka-pengeluaran { color: var(--status-red); }
+.angka-bersih.positif { color: var(--accent-blue); }
+.angka-bersih.negatif { color: var(--status-red); }
+
+/* Progress Bar */
+.progress-section { margin-top: 20px; }
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.progress-bar {
+    width: 100%;
+    background-color: var(--bg-main);
+    border-radius: 25px;
+    height: 10px;
+    overflow: hidden;
+}
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--accent-bronze);
+    border-radius: 25px;
+    transition: width 0.5s ease-in-out;
+}
+.loader-finansial {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+/* --- GAYA TAMBAHAN LAINNYA --- */
+
+.hashtag {
+    color: var(--accent-bronze);
+    font-weight: 500;
+}
+.status-tag.arsip {
+    background-color: var(--text-secondary);
+    color: var(--bg-main);
+}
+/* =========================================
+   STYLE PREMIUM (MOVING GOLD EFFECT)
+   ========================================= */
+
+.premium-section { margin-top: 5rem; text-align: center; }
+
+/* 1. BADGE PREMIUM (Emas Mengkilap Bergerak) */
+.premium-badge.animated-badge {
+    background: linear-gradient(
+        110deg, 
+        #8C6A45 0%, 
+        #D4AF37 15%, 
+        #FFF8DC 25%, 
+        #D4AF37 35%, 
+        #8C6A45 100%
+    );
+    background-size: 200% 100%;
+    color: #12181F;
+    font-size: 0.8rem; padding: 2px 8px; border-radius: 4px;
+    vertical-align: middle; margin-left: 10px; font-weight: 800;
+    text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+}
+
+/* 2. [BARU] Card wrapper premium — classnya sudah lama dipakai di HTML tapi belum pernah didefinisikan */
+.premium-card-wrapper {
+    position: relative;
+    max-width: 520px;
+    margin: 2rem auto 0;
+    border-radius: 22px;
+    padding: 2px;
+}
+.moving-border {
+    position: absolute; inset: 0; border-radius: 22px;
+    background: linear-gradient(120deg, #8C6A45, #D4AF37, #4A90E2, #D4AF37, #8C6A45);
+    background-size: 300% 300%;
+    animation: moving-border-anim 6s ease infinite;
+    z-index: 0;
+}
+@keyframes moving-border-anim {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.premium-teaser-card {
+    position: relative; z-index: 1;
+    background: var(--bg-alt);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    margin: 2px;
+}
+.teaser-content { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.teaser-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: rgba(212,175,55,0.12);
+    color: #D4AF37;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+}
+.gold-text {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    background: linear-gradient(110deg, #8C6A45 0%, #D4AF37 25%, #FFF8DC 50%, #D4AF37 75%, #8C6A45 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 0.8rem;
+}
+.premium-teaser-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.5rem; }
+.coming-soon-container { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.coming-soon-btn {
+    position: relative; overflow: hidden;
+    appearance: none; -webkit-appearance: none;
+    background: linear-gradient(110deg, #8C6A45 0%, #D4AF37 25%, #FFF8DC 50%, #D4AF37 75%, #8C6A45 100%);
+    background-size: 200% 100%;
+    color: #12181F;
+    font-family: var(--font-body); font-weight: 800; font-size: 0.85rem; letter-spacing: 0.5px;
+    padding: 0.75rem 1.8rem; border-radius: 30px; border: none; cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.coming-soon-btn:hover { transform: translateY(-2px); }
+.coming-soon-btn .shine-effect {
+    position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: shine-slide 2.5s ease-in-out infinite;
+}
+@keyframes shine-slide {
+    0% { left: -60%; }
+    100% { left: 130%; }
+}
+.coming-soon-container small { color: var(--text-secondary); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; }
+/* ============================================
+   [BARU] CODE-GATE POPUP — Data Finansial Mingguan/Bulanan
+   ============================================ */
+.code-gate-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(18, 24, 31, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 1; transition: opacity 0.25s ease;
+}
+.code-gate-overlay.hidden-gate { opacity: 0; pointer-events: none; }
+.code-gate-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem 1.8rem;
+    max-width: 360px; width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 50px -12px rgba(0,0,0,0.5);
+}
+.code-gate-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(74,144,226,0.12);
+    color: var(--accent-blue);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+}
+.code-gate-card h4 { font-family: var(--font-heading); font-size: 1.25rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+.code-gate-sub { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.2rem; line-height: 1.6; }
+.code-gate-input {
+    width: 100%; background: var(--bg-main); border: 1px solid var(--border-color);
+    border-radius: 10px; padding: 0.7rem 1rem; color: var(--text-primary);
+    font-family: var(--font-body); font-size: 0.95rem; text-align: center;
+    letter-spacing: 1px; margin-bottom: 0.5rem;
+}
+.code-gate-input:focus { outline: none; border-color: var(--accent-blue); }
+.code-gate-error { color: var(--status-red); font-size: 0.8rem; min-height: 1.1em; margin-bottom: 0.5rem; }
+.code-gate-actions { display: flex; gap: 10px; margin-top: 0.5rem; }
+.code-gate-btn { appearance: none; -webkit-appearance: none; font-family: var(--font-body); flex: 1; padding: 0.7rem; border-radius: 10px; border: none; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: opacity 0.2s; }
+.code-gate-btn:hover { opacity: 0.85; }
+.code-gate-btn.primary { background: var(--accent-blue); color: #fff; }
+.code-gate-btn.secondary { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
+
+.paywall-card { border: 1px solid rgba(212,175,55,0.35); }
+.paywall-icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
+.paywall-price {
+    background: linear-gradient(110deg, #8C6A45 0%, #D4AF37 15%, #FFF8DC 25%, #D4AF37 35%, #8C6A45 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    font-weight: 800;
+}
+.paywall-price span { font-size: 0.75em; opacity: 0.85; }
+.paywall-disclaimer { font-size: 0.75rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1.2rem; line-height: 1.6; }
+
+/* ============================================
+   [BARU] LOGBOOK — entry lama dikunci, buka via kode berbayar
+   ============================================ */
+.log-entry.log-locked {
+    display: none;
+}
+.log-entry.log-locked.unlocked-entry {
+    display: block;
+}
+.logbook-unlock-wrap { text-align: center; margin-top: 2.5rem; }
+
+/* [BARU] Popup kode akses Logbook Lengkap */
