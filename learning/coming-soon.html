@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segera Hadir — Fayazi Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
+<style>
+:root {
+  --bg: #0D1117;
+  --bg2: #161B22;
+  --text: #C9D1D9;
+  --text-dim: #8B949E;
+  --border: rgba(255,255,255,0.08);
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-ui: 'Syne', sans-serif;
+  --accent: #4A90E2;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.site-header {
+  padding: 1rem 5%;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-btn {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--accent); }
+.back-btn::before { content: '← '; }
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 5%;
+}
+.card {
+  max-width: 560px;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+}
+.icon-wrap {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: rgba(74,144,226,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--accent);
+}
+.badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(227,179,65,0.15);
+  color: #E3B341;
+  margin-bottom: 1rem;
+}
+h1 { font-family: var(--font-ui); font-size: 1.8rem; margin-bottom: 0.5rem; }
+.sub { color: var(--text-dim); font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.note {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  border-top: 1px dashed var(--border);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+.note strong { color: var(--text); }
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../index.html#belajar" class="back-btn">Kembali ke Arena Pengetahuan</a>
+</header>
+
+<main>
+  <div class="card">
+    <div class="icon-wrap"><i data-feather="clock" id="topic-icon"></i></div>
+    <span class="badge">SOON — BELUM ADA MATERI</span>
+    <h1 id="topic-title">Materi Ini</h1>
+    <p class="sub" id="topic-sub">Sedang dalam antrian pembuatan</p>
+    <div class="note">
+      <strong>Kenapa halaman ini kosong?</strong><br>
+      Kartu ini tadinya cuma placeholder tanpa link sama sekali. Sekarang minimal sudah bisa diklik dan jelas statusnya, tapi isi materinya belum dibuat karena fokus saat ini masih di topik prioritas (trading, dan skill yang sudah aktif dipakai kerja). Kalau topik ini mau diprioritaskan, tinggal bilang — bisa dibuatkan halaman materi penuh seperti Linux & CLI atau Prompt Engineering.
+    </div>
+  </div>
+</main>
+
+<footer>Fayazi — Journal of an Executor</footer>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const topic = params.get('topic') || 'Topik Ini';
+  const sub = params.get('sub') || '';
+  document.getElementById('topic-title').textContent = topic;
+  document.getElementById('topic-sub').textContent = sub;
+  document.title = topic + ' — Segera Hadir';
+  feather.replace();
+</script>
+</body>
+</html>

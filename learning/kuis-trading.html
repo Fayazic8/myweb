@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis: Psikologi & Risk Management — Fayazi Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
+<style>
+:root {
+  --bg: #0D1117;
+  --bg2: #161B22;
+  --bg3: #1C2330;
+  --gold: #D4AF37;
+  --green: #3FB950;
+  --red: #F85149;
+  --text: #C9D1D9;
+  --text-dim: #8B949E;
+  --border: rgba(255,255,255,0.08);
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-ui: 'Syne', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-ui); line-height: 1.6; padding-bottom: 3rem; }
+
+.site-header {
+  position: sticky; top: 0;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 5%;
+  display: flex; align-items: center; gap: 1rem;
+  z-index: 100;
+}
+.back-btn { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-family: var(--font-mono); }
+.back-btn:hover { color: var(--gold); }
+.back-btn::before { content: '← '; }
+.header-path { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
+.header-path .hl { color: var(--gold); }
+
+main { max-width: 640px; margin: 0 auto; padding: 2.5rem 5%; }
+
+.quiz-intro { text-align: center; margin-bottom: 2rem; }
+.hero-tag { font-family: var(--font-mono); color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1rem; }
+.quiz-intro h1 { font-size: clamp(1.6rem, 5vw, 2.2rem); margin-bottom: 0.8rem; }
+.quiz-intro p { color: var(--text-dim); font-size: 0.92rem; }
+.best-score-badge { display: inline-block; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--gold); border: 1px solid rgba(212,175,55,0.35); padding: 4px 12px; border-radius: 20px; }
+
+.progress-track { height: 6px; background: var(--bg2); border-radius: 10px; overflow: hidden; margin-bottom: 2rem; }
+.progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s ease; }
+
+.q-counter { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); text-align: center; margin-bottom: 0.8rem; }
+
+.q-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem 1.4rem; }
+.q-text { font-size: 1.08rem; font-weight: 600; margin-bottom: 1.3rem; }
+.option-btn {
+  display: block; width: 100%; text-align: left;
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.85rem 1rem; margin-bottom: 0.7rem; color: var(--text);
+  font-family: var(--font-ui); font-size: 0.92rem; cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.option-btn:hover { border-color: var(--gold); }
+.option-btn.selected { border-color: var(--gold); background: rgba(212,175,55,0.08); }
+.option-btn.correct { border-color: var(--green); background: rgba(63,185,80,0.1); }
+.option-btn.wrong { border-color: var(--red); background: rgba(248,81,73,0.1); }
+.option-btn:disabled { cursor: default; }
+
+.explanation { margin-top: 1rem; padding: 0.9rem 1rem; background: var(--bg3); border-radius: 10px; font-size: 0.85rem; color: var(--text-dim); display: none; border-left: 3px solid var(--gold); }
+.explanation.show { display: block; }
+
+.nav-actions { display: flex; justify-content: flex-end; margin-top: 1.3rem; }
+.next-btn {
+  background: var(--gold); color: #10161D; border: none; border-radius: 10px;
+  padding: 0.7rem 1.6rem; font-family: var(--font-mono); font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; opacity: 0.4; pointer-events: none; transition: opacity 0.2s;
+}
+.next-btn.ready { opacity: 1; pointer-events: auto; }
+
+.result-card { text-align: center; }
+.result-score { font-size: 3.2rem; font-weight: 800; color: var(--gold); margin: 0.5rem 0; }
+.result-tier { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
+.result-tier.good { color: var(--green); }
+.result-tier.mid { color: var(--gold); }
+.result-tier.bad { color: var(--red); }
+.result-msg { color: var(--text); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.8rem; text-align: left; background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 1.3rem 1.5rem; }
+.retry-btn {
+  background: var(--bg2); border: 1px solid var(--gold); color: var(--gold);
+  border-radius: 10px; padding: 0.8rem 1.8rem; font-family: var(--font-mono);
+  font-weight: 700; font-size: 0.85rem; cursor: pointer;
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../index.html#belajar" class="back-btn">Kembali</a>
+  <span class="header-path">Arena &gt; Trading &amp; Market &gt; <span class="hl">Kuis</span></span>
+</header>
+
+<main>
+  <div id="intro-screen">
+    <div class="quiz-intro">
+      <div class="hero-tag">TRADING & MARKET</div>
+      <h1>Kuis: Psikologi & Risk Management</h1>
+      <p>10 soal. Bukan soal analisis chart — ini soal apakah kamu benar-benar bisa jalanin aturan risk management dan nggak kebawa emosi saat posisi lagi merah.</p>
+      <div id="best-score-wrap"></div>
+    </div>
+    <div style="text-align:center;">
+      <button class="next-btn ready" id="start-btn" style="padding: 0.9rem 2.2rem;">Mulai Kuis</button>
+    </div>
+  </div>
+
+  <div id="quiz-screen" class="hidden">
+    <div class="q-counter" id="q-counter">Soal 1 dari 10</div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="q-card">
+      <div class="q-text" id="q-text"></div>
+      <div id="options-wrap"></div>
+      <div class="explanation" id="explanation"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="next-btn" id="next-btn">Lanjut</button>
+    </div>
+  </div>
+
+  <div id="result-screen" class="hidden">
+    <div class="result-card">
+      <div class="q-counter">HASIL AKHIR</div>
+      <div class="result-score" id="result-score">0/10</div>
+      <div class="result-tier" id="result-tier"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <button class="retry-btn" id="retry-btn">Ulangi Kuis</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "Risk per trade yang wajar itu berapa persen dari total modal?",
+    options: ["1–2%", "10%", "50%", "Sebanyak yang berani ditanggung"],
+    correct: 0,
+    explain: "Aturan umum 1-2% per trade bikin rangkaian loss beruntun tetap survivable. Di atas itu, beberapa kali salah berturut-turut bisa menghabiskan modal signifikan."
+  },
+  {
+    q: "Kapan waktu yang tepat menentukan stop loss?",
+    options: ["Setelah posisi mulai rugi banyak", "Sebelum entry dibuka", "Setelah profit, buat jaga-jaga", "Nggak perlu, tinggal feeling aja"],
+    correct: 1,
+    explain: "Stop loss ditentukan SEBELUM entry. Kalau ditentukan setelah rugi, itu bukan stop loss lagi — itu udah jadi keputusan emosional di tengah tekanan."
+  },
+  {
+    q: "RR (Risk-Reward) 1:2 artinya apa?",
+    options: ["Untung 1, siap rugi 2", "Siap rugi 1 untuk potensi untung 2", "Menang 1 dari 2 kali trading", "Modal dibagi jadi 2 posisi"],
+    correct: 1,
+    explain: "RR 1:2 berarti risiko yang diambil 1 satuan untuk potensi keuntungan 2 satuan. Dengan RR bagus, win rate di bawah 50% pun masih bisa profit secara keseluruhan."
+  },
+  {
+    q: "Stop loss baru saja kena. Langkah yang benar adalah?",
+    options: ["Geser stop loss lebih jauh, tunggu harga balik", "Average down di harga yang lebih murah", "Terima hasilnya, evaluasi, lanjut sesuai rencana", "Langsung entry lagi buat balikin kerugian"],
+    correct: 2,
+    explain: "Begitu stop loss kena, itu selesai. Menggeser stop loss atau average down adalah jalan tercepat menuju margin call — bukan strategi, itu penolakan menerima kenyataan."
+  },
+  {
+    q: "FOMO dalam trading adalah?",
+    options: ["Analisis mendalam sebelum entry", "Entry karena takut ketinggalan momentum, tanpa setup jelas", "Strategi scalping cepat", "Menunggu konfirmasi sinyal"],
+    correct: 1,
+    explain: "FOMO (Fear of Missing Out) bikin trader entry di harga yang sudah terlambat, tanpa validasi setup, semata karena takut ketinggalan pergerakan."
+  },
+  {
+    q: "Revenge trading paling sering dipicu oleh apa?",
+    options: ["Profit besar sebelumnya", "Loss yang baru terjadi", "Berita ekonomi", "Cuti kerja"],
+    correct: 1,
+    explain: "Revenge trading biasanya muncul setelah loss — dorongan buat 'balas dendam' ke pasar dengan entry asal, yang justru sering memperbesar kerugian."
+  },
+  {
+    q: "Fungsi utama trading journal adalah?",
+    options: ["Biar kelihatan profesional di media sosial", "Mengubah 'perasaan' jadi data yang bisa dievaluasi", "Syarat wajib broker", "Pengganti analisis teknikal"],
+    correct: 1,
+    explain: "Tanpa jurnal, tiap kesalahan terasa seperti kejadian baru — padahal biasanya pola yang sama berulang. Jurnal mengubah itu jadi data yang bisa dilihat objektif."
+  },
+  {
+    q: "Overtrading biasanya dipicu oleh apa?",
+    options: ["Setup yang sangat valid", "Bosan atau pengen balik modal cepat tanpa setup jelas", "Modal yang terlalu besar", "Terlalu banyak riset"],
+    correct: 1,
+    explain: "Overtrading sering muncul dari kebosanan atau keinginan cepat balik modal — entry berkali-kali dalam sehari tanpa setup yang benar-benar valid."
+  },
+  {
+    q: "Position sizing yang benar dihitung dari apa?",
+    options: ["Seberapa yakin perasaan terhadap setup", "Jarak entry ke stop loss dan batas risiko per trade", "Rekomendasi teman", "Semua modal yang ada"],
+    correct: 1,
+    explain: "Ukuran posisi seharusnya dihitung dari jarak stop loss dan berapa persen modal yang mau dirisikokan — bukan dari seberapa yakin perasaan terhadap suatu setup."
+  },
+  {
+    q: "Tujuan jangka pendek yang lebih penting dari 'profit besar' adalah?",
+    options: ["Trading sesering mungkin", "Konsistensi menjalankan proses sesuai rule", "Ikut sinyal orang lain", "Naikin ukuran posisi terus-menerus"],
+    correct: 1,
+    explain: "Di awal, tujuannya bukan profit besar — tapi menjalankan proses (entry sesuai rule, risk sesuai rule) berulang kali tanpa penyimpangan. Profit yang konsisten adalah efek samping dari proses yang konsisten."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const introScreen = document.getElementById('intro-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultScreen = document.getElementById('result-screen');
+const startBtn = document.getElementById('start-btn');
+const nextBtn = document.getElementById('next-btn');
+const retryBtn = document.getElementById('retry-btn');
+const bestScoreWrap = document.getElementById('best-score-wrap');
+
+function loadBestScore() {
+  try {
+    const best = localStorage.getItem('kuis-trading-best');
+    if (best !== null) {
+      bestScoreWrap.innerHTML = `<div class="best-score-badge">🏆 Skor terbaik: ${best}/10</div>`;
+    }
+  } catch (e) {}
+}
+function saveBestScore(s) {
+  try {
+    const best = localStorage.getItem('kuis-trading-best');
+    if (best === null || s > parseInt(best)) {
+      localStorage.setItem('kuis-trading-best', s);
+    }
+  } catch (e) {}
+}
+loadBestScore();
+
+startBtn.addEventListener('click', () => {
+  introScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  renderQuestion();
+});
+
+function renderQuestion() {
+  answered = false;
+  const q = QUESTIONS[current];
+  document.getElementById('q-counter').textContent = `Soal ${current + 1} dari ${QUESTIONS.length}`;
+  document.getElementById('progress-fill').style.width = `${(current / QUESTIONS.length) * 100}%`;
+  document.getElementById('q-text').textContent = q.q;
+  const explanation = document.getElementById('explanation');
+  explanation.classList.remove('show');
+  explanation.textContent = '';
+  nextBtn.classList.remove('ready');
+  nextBtn.textContent = current === QUESTIONS.length - 1 ? 'Lihat Hasil' : 'Lanjut';
+
+  const wrap = document.getElementById('options-wrap');
+  wrap.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => selectOption(i, btn));
+    wrap.appendChild(btn);
+  });
+}
+
+function selectOption(i, btn) {
+  if (answered) return;
+  answered = true;
+  const q = QUESTIONS[current];
+  const buttons = document.querySelectorAll('.option-btn');
+  buttons.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.correct) b.classList.add('correct');
+    else if (idx === i) b.classList.add('wrong');
+  });
+  if (i === q.correct) score++;
+  const explanation = document.getElementById('explanation');
+  explanation.textContent = q.explain;
+  explanation.classList.add('show');
+  nextBtn.classList.add('ready');
+}
+
+nextBtn.addEventListener('click', () => {
+  if (!answered) return;
+  current++;
+  if (current < QUESTIONS.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  quizScreen.classList.add('hidden');
+  resultScreen.classList.remove('hidden');
+  document.getElementById('result-score').textContent = `${score}/${QUESTIONS.length}`;
+  saveBestScore(score);
+
+  const tierEl = document.getElementById('result-tier');
+  const msgEl = document.getElementById('result-msg');
+
+  if (score >= 8) {
+    tierEl.textContent = 'Disiplin';
+    tierEl.className = 'result-tier good';
+    msgEl.textContent = 'Pemahaman kamu soal risk management dan psikologi udah solid di atas kertas. Sekarang tantangannya bukan lagi teori — apakah kamu benar-benar jalanin ini pas posisi lagi merah di demo? Jurnal kamu yang bakal jawab itu, bukan skor kuis ini.';
+  } else if (score >= 5) {
+    tierEl.textContent = 'Perlu Latihan';
+    tierEl.className = 'result-tier mid';
+    msgEl.textContent = 'Beberapa konsep dasar masih belum ketancep. Ini bahaya, karena di trading, hal-hal yang kamu belum kuasai secara teori biasanya juga yang gagal kamu jalanin secara praktik pas emosi lagi naik. Baca ulang bagian Risk Management dan Journal & Psikologi sebelum lanjut entry demo berikutnya.';
+  } else {
+    tierEl.textContent = 'Sistem Belum Siap';
+    tierEl.className = 'result-tier bad';
+    msgEl.textContent = 'Fondasinya belum ada. Entry di demo tanpa paham risk management dan psikologi dasar itu sama aja kayak latihan tanpa rem — kamu bakal ngulang kesalahan yang sama terus tanpa sadar kenapa. Baca ulang dari awal materi Risk Management dan Trading Journal, baru balik ke sini.';
+  }
+}
+
+retryBtn.addEventListener('click', () => {
+  current = 0;
+  score = 0;
+  resultScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  renderQuestion();
+  loadBestScore();
+});
+
+feather.replace();
+</script>
+</body>
+</html>

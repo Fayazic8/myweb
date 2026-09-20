@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux & CLI — Fayazi Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D1117;
+  --bg2: #161B22;
+  --bg3: #1C2330;
+  --term-green: #39D353;
+  --term-green-dim: #1a6b2a;
+  --term-yellow: #E3B341;
+  --term-blue: #58A6FF;
+  --term-red: #F85149;
+  --term-cyan: #56D364;
+  --text: #C9D1D9;
+  --text-dim: #8B949E;
+  --border: rgba(255,255,255,0.08);
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-ui: 'Syne', sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* SCANLINE OVERLAY */
+body::before {
+  content:'';
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* HEADER */
+.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 5%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 100;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--term-green); }
+.back-btn::before { content: '←'; }
+
+.header-path {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.header-path .hl { color: var(--term-green); }
+
+/* HERO */
+.hero {
+  padding: 80px 5% 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(57,211,83,0.1);
+  border: 1px solid rgba(57,211,83,0.25);
+  color: var(--term-green);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+.hero-tag::before { content: '$'; opacity: 0.6; }
+
+.hero h1 {
+  font-family: var(--font-ui);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.hero h1 .accent { color: var(--term-green); }
+
+.hero-desc {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+}
+
+/* PROGRESS BAR */
+.progress-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 3rem;
+}
+.progress-track {
+  flex-grow: 1;
+  height: 6px;
+  background: var(--bg3);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 300px;
+}
+.progress-track-fill {
+  height: 100%;
+  width: 65%;
+  background: linear-gradient(to right, var(--term-green-dim), var(--term-green));
+  border-radius: 10px;
+  animation: fillBar 1.5s ease forwards;
+}
+@keyframes fillBar { from { width: 0 } to { width: 65% } }
+.progress-label { font-family: var(--font-mono); font-size: 0.85rem; color: var(--term-green); }
+
+/* QUICK JUMP */
+.quick-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+.jump-btn {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.jump-btn:hover {
+  border-color: var(--term-green);
+  color: var(--term-green);
+  background: rgba(57,211,83,0.05);
+}
+
+/* MAIN LAYOUT */
+.content-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5% 100px;
+}
+
+/* SECTION */
+.learn-section {
+  margin-bottom: 80px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.learn-section.visible { opacity: 1; transform: translateY(0); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--term-green);
+  background: rgba(57,211,83,0.1);
+  border: 1px solid rgba(57,211,83,0.2);
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+.section-header h2 {
+  font-family: var(--font-ui);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* THEORY BLOCK */
+.theory-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--term-blue);
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.theory-block strong { color: var(--term-blue); }
+.theory-block p + p { margin-top: 0.75rem; }
+
+/* CONCEPT GRID */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.concept-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.concept-card:hover {
+  border-color: rgba(57,211,83,0.3);
+  transform: translateY(-2px);
+}
+.concept-card .cc-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.concept-card h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--term-green);
+  font-family: var(--font-mono);
+}
+.concept-card p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* TERMINAL BLOCK */
+.terminal {
+  background: #010409;
+  border: 1px solid rgba(57,211,83,0.2);
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.terminal-bar {
+  background: var(--bg2);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.t-dot { width: 12px; height: 12px; border-radius: 50%; }
+.t-dot.red   { background: #FF5F57; }
+.t-dot.yellow{ background: #FFBD2E; }
+.t-dot.green { background: #28C840; }
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-left: 8px;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 2;
+}
+
+.t-line { display: flex; flex-direction: column; }
+
+.t-cmd {
+  color: var(--term-green);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.t-cmd::before { content: '$ '; color: var(--text-dim); }
+
+.t-comment {
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  margin-left: 16px;
+}
+.t-comment::before { content: '# '; }
+
+.t-output {
+  color: #6E7681;
+  padding-left: 16px;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+}
+
+.t-out-hl { color: var(--term-yellow); }
+.t-out-success { color: var(--term-green); }
+.t-out-err { color: var(--term-red); }
+.t-out-info { color: var(--term-blue); }
+
+.t-gap { height: 12px; }
+
+/* COMMAND TABLE */
+.cmd-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.cmd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.cmd-table thead {
+  background: var(--bg3);
+}
+
+.cmd-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+
+.cmd-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.cmd-table tr:last-child td { border-bottom: none; }
+.cmd-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.cmd-table td:first-child {
+  font-family: var(--font-mono);
+  color: var(--term-green);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+.cmd-table td:nth-child(2) {
+  color: var(--text-dim);
+  font-size: 0.83rem;
+}
+.cmd-table td:nth-child(3) {
+  font-family: var(--font-mono);
+  color: var(--term-yellow);
+  font-size: 0.78rem;
+}
+
+/* CALLOUT */
+.callout {
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+.callout-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+.callout.tip   { background: rgba(57,211,83,0.08);  border: 1px solid rgba(57,211,83,0.2); }
+.callout.warn  { background: rgba(227,179,65,0.08); border: 1px solid rgba(227,179,65,0.2); }
+.callout.danger{ background: rgba(248,81,73,0.08);  border: 1px solid rgba(248,81,73,0.25); }
+.callout.info  { background: rgba(88,166,255,0.08); border: 1px solid rgba(88,166,255,0.2); }
+.callout.tip .callout-text strong   { color: var(--term-green); }
+.callout.warn .callout-text strong  { color: var(--term-yellow); }
+.callout.danger .callout-text strong{ color: var(--term-red); }
+.callout.info .callout-text strong  { color: var(--term-blue); }
+.callout-text p + p { margin-top: 0.5rem; }
+
+/* STEP LIST */
+.step-list { list-style: none; margin-bottom: 2rem; }
+.step-list li {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.step-list li::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 36px;
+  bottom: -12px;
+  width: 1px;
+  background: var(--border);
+}
+.step-list li:last-child::before { display: none; }
+.step-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background: rgba(57,211,83,0.1);
+  border: 1px solid rgba(57,211,83,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--term-green);
+  font-weight: 700;
+}
+.step-content h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.step-content p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+/* QUIZ BLOCK */
+.quiz-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+.quiz-block h3 {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--term-yellow);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.quiz-block h3::before { content: '?'; background: rgba(227,179,65,0.15); border: 1px solid rgba(227,179,65,0.3); padding: 0 6px; border-radius: 4px; }
+
+.quiz-q {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+}
+
+.quiz-options { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
+.quiz-opt {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  text-align: left;
+  transition: all 0.2s;
+}
+.quiz-opt:hover { border-color: var(--term-blue); color: var(--term-blue); background: rgba(88,166,255,0.05); }
+.quiz-opt.correct { border-color: var(--term-green); color: var(--term-green); background: rgba(57,211,83,0.08); }
+.quiz-opt.wrong   { border-color: var(--term-red);   color: var(--term-red);   background: rgba(248,81,73,0.08); }
+
+.quiz-answer {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  background: rgba(57,211,83,0.05);
+  border: 1px solid rgba(57,211,83,0.15);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-top: -4px;
+  margin-bottom: 1rem;
+}
+.quiz-answer.show { display: block; }
+.quiz-answer strong { color: var(--term-green); }
+
+/* CHEATSHEET */
+.cheatsheet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.cheat-category {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cheat-cat-header {
+  background: var(--bg3);
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--term-yellow);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.cheat-list { padding: 10px 0; }
+.cheat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 14px;
+  gap: 12px;
+}
+.cheat-item:hover { background: rgba(255,255,255,0.02); }
+.cheat-cmd {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--term-green);
+  white-space: nowrap;
+}
+.cheat-desc {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+/* INLINE CODE */
+code {
+  font-family: var(--font-mono);
+  background: rgba(255,255,255,0.07);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: var(--term-yellow);
+}
+
+/* FOOTER NAV */
+.page-footer-nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5% 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+.footer-nav-link {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+.footer-nav-link:hover { color: var(--term-green); }
+
+/* SCROLL REVEAL */
+@keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero { padding: 60px 5% 40px; }
+  .concept-grid { grid-template-columns: 1fr 1fr; }
+  .cheatsheet-grid { grid-template-columns: 1fr; }
+  .terminal-body { font-size: 0.78rem; }
+  .cmd-table td:nth-child(3) { display: none; }
+  .page-footer-nav { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="../index.html" class="back-btn">Kembali</a>
+  <span class="header-path">
+    <span class="hl">~/fayazi</span>/learning/<span class="hl">belajar-linux</span>
+  </span>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">INFRASTRUKTUR &amp; SISTEM</div>
+  <h1>Linux &amp; <span class="accent">Command Line</span></h1>
+  <p class="hero-desc">Navigasi, kontrol, dan kendalikan sistem operasi tanpa bergantung pada GUI. Ini adalah bahasa mesin yang sebenarnya.</p>
+  <div class="progress-hero">
+    <div class="progress-track"><div class="progress-track-fill"></div></div>
+    <span class="progress-label">65% dikuasai</span>
+  </div>
+  <div class="quick-jump">
+    <a href="#dasar" class="jump-btn">01. Apa itu Linux?</a>
+    <a href="#navigasi" class="jump-btn">02. Navigasi File</a>
+    <a href="#file-ops" class="jump-btn">03. Operasi File</a>
+    <a href="#permission" class="jump-btn">04. Permission</a>
+    <a href="#proses" class="jump-btn">05. Proses & Sistem</a>
+    <a href="#teks" class="jump-btn">06. Manipulasi Teks</a>
+    <a href="#jaringan" class="jump-btn">07. Jaringan</a>
+    <a href="#cheatsheet" class="jump-btn">⚡ Cheatsheet</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-layout">
+
+  <!-- ===========================
+       SECTION 1: APA ITU LINUX
+       =========================== -->
+  <section class="learn-section" id="dasar">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Apa itu Linux & Kenapa Harus Dipelajari?</h2>
+    </div>
+
+    <div class="theory-block">
+      <p><strong>Linux adalah sistem operasi open-source</strong> yang berjalan di sebagian besar server dunia, termasuk server Google, Facebook, dan hampir semua cloud provider. Kalau lo serius di bidang IT, sysadmin, atau bahkan trading berbasis bot — lo pasti butuh Linux.</p>
+      <p>CLI (Command Line Interface) bukan sekadar "cara kuno" — ini adalah cara yang <strong>paling efisien, cepat, dan powerful</strong> untuk mengontrol sebuah sistem. Satu baris perintah bisa menggantikan 10 langkah klik di GUI.</p>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="cc-icon">🐧</div>
+        <h4>Kernel</h4>
+        <p>Inti dari Linux. Jembatan antara software dan hardware. Lo tidak berinteraksi langsung, tapi semua perintah bermuara ke sini.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">🖥️</div>
+        <h4>Shell</h4>
+        <p>Program yang membaca perintah lo dan meneruskannya ke kernel. Contoh: <code>bash</code>, <code>zsh</code>, <code>sh</code>. Yang paling umum adalah <strong>bash</strong>.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">📁</div>
+        <h4>Filesystem</h4>
+        <p>Struktur direktori Linux dimulai dari <code>/</code> (root). Bukan <code>C:\</code> kayak Windows. Semua dalam satu pohon.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">👤</div>
+        <h4>User & Root</h4>
+        <p>Ada user biasa dan <code>root</code> (superuser). Root punya akses penuh — berbahaya kalau salah dipakai. Gunakan dengan sadar.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">📦</div>
+        <h4>Distro</h4>
+        <p>Versi Linux yang dibungkus berbeda. Ubuntu (pemula), Debian (server), Arch (advanced). Pelajari Ubuntu/Debian dulu.</p>
+      </div>
+      <div class="concept-card">
+        <div class="cc-icon">⚙️</div>
+        <h4>Package Manager</h4>
+        <p>Tool untuk install/hapus program. Di Ubuntu/Debian pakai <code>apt</code>. Di RedHat/CentOS pakai <code>yum</code> atau <code>dnf</code>.</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">💡</span>
+      <div class="callout-text">
+        <strong>Cara Praktik Tanpa Install Linux:</strong>
+        <p>Pakai <strong>WSL (Windows Subsystem for Linux)</strong> di Windows 10/11, atau coba langsung di browser via <strong>webminal.org</strong> atau <strong>linuxzoo.net</strong>. Tidak ada alasan untuk tidak mulai hari ini.</p>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — pertama kali buka terminal</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">Siapa lo di sistem ini?</span></div>
+        <div class="t-line"><span class="t-cmd">whoami</span></div>
+        <div class="t-line"><span class="t-output t-out-hl">fayazi</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Sekarang lagi di direktori mana?</span></div>
+        <div class="t-line"><span class="t-cmd">pwd</span></div>
+        <div class="t-line"><span class="t-output">/home/fayazi</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Pakai distro Linux apa?</span></div>
+        <div class="t-line"><span class="t-cmd">cat /etc/os-release</span></div>
+        <div class="t-line"><span class="t-output">PRETTY_NAME=<span class="t-out-hl">"Ubuntu 22.04.3 LTS"</span></span></div>
+        <div class="t-line"><span class="t-output">NAME="Ubuntu"</span></div>
+        <div class="t-line"><span class="t-output">VERSION_ID="22.04"</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Mau tau semua tentang sebuah perintah? pakai man</span></div>
+        <div class="t-line"><span class="t-cmd">man ls</span></div>
+        <div class="t-line"><span class="t-output t-out-info">LS(1)   User Commands   LS(1)</span></div>
+        <div class="t-line"><span class="t-output">NAME: ls - list directory contents</span></div>
+        <div class="t-line"><span class="t-output t-out-hl">... (tekan Q untuk keluar dari halaman manual)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 2: NAVIGASI
+       =========================== -->
+  <section class="learn-section" id="navigasi">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Navigasi Sistem File</h2>
+    </div>
+
+    <div class="theory-block">
+      <p>Di Linux, semua dimulai dari <strong><code>/</code> (root directory)</strong>. Bayangkan ini sebagai <code>C:\</code> tapi versi Linux. Dari sini semua direktori tumbuh ke bawah seperti pohon.</p>
+      <p>Ada dua jenis path: <strong>Absolute</strong> (dimulai dari <code>/</code>, contoh: <code>/home/fayazi/dokumen</code>) dan <strong>Relative</strong> (relatif dari posisi sekarang, contoh: <code>../dokumen</code>). Pahami ini dulu sebelum lanjut.</p>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">📂</span>
+      <div class="callout-text">
+        <strong>Struktur Direktori Penting di Linux:</strong>
+        <p><code>/home</code> — folder user (kayak Documents di Windows) | <code>/etc</code> — semua file konfigurasi | <code>/var</code> — log dan data variabel | <code>/tmp</code> — file sementara, dihapus saat reboot | <code>/bin</code> &amp; <code>/usr/bin</code> — program-program yang bisa dijalankan</p>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — navigasi direktori</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">Lihat isi direktori sekarang</span></div>
+        <div class="t-line"><span class="t-cmd">ls</span></div>
+        <div class="t-line"><span class="t-output">Desktop  Documents  Downloads  Music  Pictures  Videos</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">ls -la → tampilkan semua file (termasuk hidden) + detail lengkap</span></div>
+        <div class="t-line"><span class="t-cmd">ls -la</span></div>
+        <div class="t-line"><span class="t-output">total 48</span></div>
+        <div class="t-line"><span class="t-output">drwxr-xr-x  8 fayazi fayazi 4096 Jul 10 09:00 <span class="t-out-hl">.</span></span></div>
+        <div class="t-line"><span class="t-output">drwxr-xr-x  3 root   root   4096 Jul 10 08:00 <span class="t-out-hl">..</span></span></div>
+        <div class="t-line"><span class="t-output">-rw-r--r--  1 fayazi fayazi  220 Jul 10 08:00 .bash_logout</span></div>
+        <div class="t-line"><span class="t-output">drwxr-xr-x  2 fayazi fayazi 4096 Jul 10 09:00 <span class="t-out-hl">Documents</span></span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Pindah ke direktori Documents</span></div>
+        <div class="t-line"><span class="t-cmd">cd Documents</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Naik satu level ke atas</span></div>
+        <div class="t-line"><span class="t-cmd">cd ..</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Langsung balik ke home directory (shortcut)</span></div>
+        <div class="t-line"><span class="t-cmd">cd ~</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Balik ke direktori sebelumnya (kayak tombol Back)</span></div>
+        <div class="t-line"><span class="t-cmd">cd -</span></div>
+        <div class="t-line"><span class="t-output t-out-info">/home/fayazi/Documents</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Lihat struktur direktori seperti pohon</span></div>
+        <div class="t-line"><span class="t-cmd">tree -L 2</span></div>
+        <div class="t-line"><span class="t-output">.</span></div>
+        <div class="t-line"><span class="t-output">├── Documents</span></div>
+        <div class="t-line"><span class="t-output">│   └── catatan.txt</span></div>
+        <div class="t-line"><span class="t-output">└── Downloads</span></div>
+        <div class="t-line"><span class="t-output">    └── ubuntu.iso</span></div>
+      </div>
+    </div>
+
+    <div class="cmd-table-wrap">
+      <table class="cmd-table">
+        <thead><tr><th>Perintah</th><th>Fungsi</th><th>Contoh</th></tr></thead>
+        <tbody>
+          <tr><td>pwd</td><td>Print Working Directory — tampilkan posisi lo sekarang</td><td>pwd</td></tr>
+          <tr><td>ls</td><td>List — tampilkan isi direktori</td><td>ls -la /var/log</td></tr>
+          <tr><td>cd [dir]</td><td>Change Directory — pindah direktori</td><td>cd /etc/nginx</td></tr>
+          <tr><td>cd ~</td><td>Langsung ke home directory</td><td>cd ~</td></tr>
+          <tr><td>cd ..</td><td>Naik satu level ke atas</td><td>cd ../../</td></tr>
+          <tr><td>cd -</td><td>Balik ke direktori sebelumnya</td><td>cd -</td></tr>
+          <tr><td>tree</td><td>Tampilkan struktur direktori (perlu install)</td><td>tree -L 3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 3: OPERASI FILE
+       =========================== -->
+  <section class="learn-section" id="file-ops">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Operasi File & Direktori</h2>
+    </div>
+
+    <div class="theory-block">
+      <p>Ini adalah operasi yang paling sering lo pakai: buat, salin, pindah, hapus, dan baca file. Hafalkan ini sampai jadi otomatis di jari lo.</p>
+      <p><strong>Perhatian:</strong> Di Linux tidak ada "Recycle Bin" di terminal. Perintah <code>rm</code> langsung hapus permanen. Tidak bisa di-undo.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — operasi file</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">Buat direktori baru</span></div>
+        <div class="t-line"><span class="t-cmd">mkdir proyek-trading</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Buat direktori beserta sub-direktorinya sekaligus (-p)</span></div>
+        <div class="t-line"><span class="t-cmd">mkdir -p proyek-trading/data/csv</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Buat file kosong (atau update timestamp jika sudah ada)</span></div>
+        <div class="t-line"><span class="t-cmd">touch catatan.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Tulis teks ke file (hati-hati: > akan TIMPA isi file)</span></div>
+        <div class="t-line"><span class="t-cmd">echo "Ini catatan pertama saya" > catatan.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">>> untuk TAMBAHKAN ke file (tidak menimpa)</span></div>
+        <div class="t-line"><span class="t-cmd">echo "Entry baru ditambahkan" >> catatan.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Baca isi file</span></div>
+        <div class="t-line"><span class="t-cmd">cat catatan.txt</span></div>
+        <div class="t-line"><span class="t-output">Ini catatan pertama saya</span></div>
+        <div class="t-line"><span class="t-output">Entry baru ditambahkan</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Salin file</span></div>
+        <div class="t-line"><span class="t-cmd">cp catatan.txt catatan-backup.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Salin direktori beserta seluruh isinya (-r)</span></div>
+        <div class="t-line"><span class="t-cmd">cp -r proyek-trading proyek-trading-backup</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Pindahkan file (atau rename jika di direktori sama)</span></div>
+        <div class="t-line"><span class="t-cmd">mv catatan.txt proyek-trading/catatan.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Rename file</span></div>
+        <div class="t-line"><span class="t-cmd">mv nama-lama.txt nama-baru.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">HAPUS file — PERMANEN, tidak bisa undo!</span></div>
+        <div class="t-line"><span class="t-cmd">rm catatan-backup.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Hapus direktori kosong</span></div>
+        <div class="t-line"><span class="t-cmd">rmdir direktori-kosong</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Hapus direktori + semua isinya (-rf = recursive + force)</span></div>
+        <div class="t-line"><span class="t-cmd">rm -rf proyek-trading-backup</span></div>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-text">
+        <strong>JANGAN PERNAH jalankan ini:</strong>
+        <p><code>rm -rf /</code> atau <code>rm -rf /*</code> — ini akan menghapus SELURUH sistem lo. Tidak ada recovery. Ini bukan mitos. Beberapa orang sudah merusak server production mereka karena ini.</p>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">⚡</span>
+      <div class="callout-text">
+        <strong>Wildcard — Hemat Ketikan:</strong>
+        <p><code>*</code> = semua karakter. Contoh: <code>rm *.log</code> hapus semua file .log | <code>ls *.txt</code> tampilkan semua file txt | <code>cp data*.csv /backup/</code> salin semua file csv yang dimulai dengan "data"</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 4: PERMISSION
+       =========================== -->
+  <section class="learn-section" id="permission">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Permission & Kepemilikan File</h2>
+    </div>
+
+    <div class="theory-block">
+      <p>Ini adalah salah satu konsep paling penting di Linux. <strong>Setiap file punya tiga level permission</strong>: untuk owner (pemilik), untuk group, dan untuk others (semua orang lain). Dan tiga jenis aksi: <strong>r</strong> (read/baca), <strong>w</strong> (write/tulis), <strong>x</strong> (execute/jalankan).</p>
+      <p>Kalau lo pernah lihat <code>permission denied</code> saat menjalankan sesuatu, ini penyebabnya.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — memahami permission</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">Lihat permission file</span></div>
+        <div class="t-line"><span class="t-cmd">ls -la</span></div>
+        <div class="t-line"><span class="t-output"><span class="t-out-hl">-rwxr-xr--</span> 1 fayazi fayazi 1024 Jul 10 catatan.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Breakdown: -rwxr-xr--</span></div>
+        <div class="t-line"><span class="t-output t-out-info">- → tipe file (- = file biasa, d = direktori, l = symlink)</span></div>
+        <div class="t-line"><span class="t-output t-out-success">rwx → owner (fayazi): bisa baca, tulis, dan jalankan</span></div>
+        <div class="t-line"><span class="t-output t-out-hl">r-x → group: bisa baca dan jalankan, TIDAK bisa tulis</span></div>
+        <div class="t-line"><span class="t-output">r-- → others: hanya bisa baca</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Ubah permission dengan chmod (mode numerik)</span></div>
+        <div class="t-line"><span class="t-comment">4=read, 2=write, 1=execute. Dijumlahkan: 7=rwx, 6=rw-, 5=r-x, 4=r--</span></div>
+        <div class="t-line"><span class="t-cmd">chmod 755 script.sh</span></div>
+        <div class="t-line"><span class="t-comment">755 = owner(7=rwx) group(5=r-x) others(5=r-x)</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">chmod dengan mode simbolik (lebih mudah dibaca)</span></div>
+        <div class="t-line"><span class="t-cmd">chmod +x script.sh</span></div>
+        <div class="t-line"><span class="t-comment">+x = tambahkan execute permission untuk semua</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-cmd">chmod u+w,g-w catatan.txt</span></div>
+        <div class="t-line"><span class="t-comment">u=user/owner, g=group, o=others, a=all</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Ubah kepemilikan file</span></div>
+        <div class="t-line"><span class="t-cmd">chown fayazi:fayazi file.txt</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Jalankan perintah sebagai root (superuser)</span></div>
+        <div class="t-line"><span class="t-cmd">sudo apt update</span></div>
+        <div class="t-line"><span class="t-output">[sudo] password for fayazi: </span></div>
+        <div class="t-line"><span class="t-output t-out-success">Hit:1 http://archive.ubuntu.com focal InRelease</span></div>
+        <div class="t-line"><span class="t-output t-out-success">Reading package lists... Done</span></div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">🔑</span>
+      <div class="callout-text">
+        <strong>Hafalan Cepat Permission Angka:</strong>
+        <p><code>777</code> = semua orang bisa apa saja (berbahaya di server!) | <code>755</code> = standar untuk executable/folder | <code>644</code> = standar untuk file biasa | <code>600</code> = hanya owner yang bisa baca+tulis (cocok untuk SSH key)</p>
+      </div>
+    </div>
+
+    <div class="quiz-block">
+      <h3>UJI PEMAHAMAN</h3>
+      <p class="quiz-q">1. Perintah apa yang digunakan untuk membuat file bernama <code>script.sh</code> bisa dieksekusi oleh semua user?</p>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="checkQuiz(this, false)">A. chmod 644 script.sh</button>
+        <button class="quiz-opt" onclick="checkQuiz(this, true)">B. chmod +x script.sh</button>
+        <button class="quiz-opt" onclick="checkQuiz(this, false)">C. chown +x script.sh</button>
+        <button class="quiz-opt" onclick="checkQuiz(this, false)">D. sudo script.sh</button>
+      </div>
+      <div class="quiz-answer" id="qa1"><strong>✓ Benar!</strong> <code>chmod +x</code> menambahkan execute permission untuk semua (owner, group, others). Alternatifnya bisa juga <code>chmod 755</code> untuk lebih spesifik.</div>
+
+      <p class="quiz-q">2. Lo lihat permission <code>rw-r--r--</code> pada sebuah file. Apa artinya?</p>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="checkQuiz(this, false)">A. Semua orang bisa baca, tulis, dan eksekusi</button>
+        <button class="quiz-opt" onclick="checkQuiz(this, true)">B. Owner bisa baca+tulis, group & others hanya bisa baca</button>
+        <button class="quiz-opt" onclick="checkQuiz(this, false)">C. File ini tidak bisa diakses siapapun</button>
+        <button class="quiz-opt" onclick="checkQuiz(this, false)">D. File ini adalah direktori</button>
+      </div>
+      <div class="quiz-answer" id="qa2"><strong>✓ Benar!</strong> <code>rw-</code> = read+write (no execute) untuk owner. <code>r--</code> = read only untuk group. <code>r--</code> = read only untuk others. Ini setara dengan chmod 644.</div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 5: PROSES & SISTEM
+       =========================== -->
+  <section class="learn-section" id="proses">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Proses & Monitoring Sistem</h2>
+    </div>
+
+    <div class="theory-block">
+      <p>Setiap program yang berjalan di Linux adalah sebuah <strong>proses</strong> dengan ID unik (PID). Lo perlu tahu cara melihat proses yang berjalan, menutupnya, dan memantau kesehatan sistem — terutama kalau lo manage server atau bot trading.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — monitoring proses & sistem</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">Lihat semua proses yang berjalan (snapshot)</span></div>
+        <div class="t-line"><span class="t-cmd">ps aux</span></div>
+        <div class="t-line"><span class="t-output t-out-info">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span></div>
+        <div class="t-line"><span class="t-output">root         1  0.0  0.1 168576 11120 ?        Ss   09:00   0:01 /sbin/init</span></div>
+        <div class="t-line"><span class="t-output t-out-hl">fayazi    1234  2.5  1.2 650000 48000 pts/0    Sl   09:15   0:10 python3 bot.py</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Tampilan real-time (kayak Task Manager). Tekan Q untuk keluar</span></div>
+        <div class="t-line"><span class="t-cmd">top</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">htop — versi top yang lebih cantik (perlu install dulu)</span></div>
+        <div class="t-line"><span class="t-cmd">sudo apt install htop -y && htop</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Cari proses berdasarkan nama</span></div>
+        <div class="t-line"><span class="t-cmd">pgrep python3</span></div>
+        <div class="t-line"><span class="t-output">1234</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Matikan proses berdasarkan PID (SIGTERM = minta berhenti dengan sopan)</span></div>
+        <div class="t-line"><span class="t-cmd">kill 1234</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Paksa matikan (SIGKILL = langsung bunuh, jika kill biasa tidak mempan)</span></div>
+        <div class="t-line"><span class="t-cmd">kill -9 1234</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Matikan semua proses bernama python3</span></div>
+        <div class="t-line"><span class="t-cmd">pkill python3</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Cek penggunaan disk</span></div>
+        <div class="t-line"><span class="t-cmd">df -h</span></div>
+        <div class="t-line"><span class="t-output t-out-info">Filesystem      Size  Used Avail Use% Mounted on</span></div>
+        <div class="t-line"><span class="t-output">/dev/sda1        20G   12G  6.8G  64% /</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Cek ukuran direktori/file (du = disk usage)</span></div>
+        <div class="t-line"><span class="t-cmd">du -sh /home/fayazi/</span></div>
+        <div class="t-line"><span class="t-output">2.1G    /home/fayazi/</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Cek RAM yang terpakai</span></div>
+        <div class="t-line"><span class="t-cmd">free -h</span></div>
+        <div class="t-line"><span class="t-output t-out-info">              total  used  free  shared  buff/cache  available</span></div>
+        <div class="t-line"><span class="t-output">Mem:           7.8G  2.1G  4.2G    200M        1.5G       5.2G</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Jalankan proses di background (tambah &amp; di akhir)</span></div>
+        <div class="t-line"><span class="t-cmd">python3 bot.py &amp;</span></div>
+        <div class="t-line"><span class="t-output">[1] 1567</span></div>
+        <div class="t-line"><span class="t-comment">Sekarang terminal bebas dipakai lagi, bot jalan di background</span></div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">🤖</span>
+      <div class="callout-text">
+        <strong>Relevansi ke Trading Bot:</strong>
+        <p>Kalau lo nanti punya bot trading yang jalan di VPS, lo harus bisa: cek apakah bot-nya masih jalan (<code>ps aux | grep bot</code>), restart kalau crash (<code>kill PID</code> lalu jalankan lagi), dan monitor RAM/CPU supaya server tidak kehabisan resource.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 6: MANIPULASI TEKS
+       =========================== -->
+  <section class="learn-section" id="teks">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Manipulasi Teks & Pipe</h2>
+    </div>
+
+    <div class="theory-block">
+      <p>Di Linux, hampir semua konfigurasi dan output adalah teks. Kemampuan membaca, mencari, dan memfilter teks adalah skill wajib. <strong>Pipe (<code>|</code>)</strong> adalah konsep terpenting di sini — output dari perintah pertama dijadikan input perintah kedua.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — teks dan pipe</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">cat — tampilkan seluruh isi file</span></div>
+        <div class="t-line"><span class="t-cmd">cat /var/log/syslog</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">less — tampilkan file satu layar penuh (Q untuk keluar, Space untuk next)</span></div>
+        <div class="t-line"><span class="t-cmd">less /var/log/syslog</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">head — tampilkan 10 baris pertama</span></div>
+        <div class="t-line"><span class="t-cmd">head -20 /var/log/syslog</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">tail — tampilkan 10 baris terakhir (-f untuk live/follow)</span></div>
+        <div class="t-line"><span class="t-cmd">tail -f /var/log/syslog</span></div>
+        <div class="t-line"><span class="t-comment">Cocok banget untuk monitoring log bot trading secara live!</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">grep — cari baris yang mengandung kata tertentu</span></div>
+        <div class="t-line"><span class="t-cmd">grep "error" /var/log/syslog</span></div>
+        <div class="t-line"><span class="t-output t-out-err">Jul 10 09:15:02 myserver error: connection timeout</span></div>
+        <div class="t-line"><span class="t-output t-out-err">Jul 10 09:18:44 myserver error: disk full</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">grep -i = case insensitive, -r = recursive (cari dalam folder)</span></div>
+        <div class="t-line"><span class="t-cmd">grep -ri "password" /etc/</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">PIPE (|) — output dari ps aux masuk ke grep</span></div>
+        <div class="t-line"><span class="t-cmd">ps aux | grep python</span></div>
+        <div class="t-line"><span class="t-output t-out-hl">fayazi  1234  2.5  1.2 ... python3 bot.py</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Hitung jumlah baris di file (wc -l)</span></div>
+        <div class="t-line"><span class="t-cmd">wc -l data-trading.csv</span></div>
+        <div class="t-line"><span class="t-output">1500 data-trading.csv</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Contoh pipe berantai: cari error, ambil 5 terakhir, hitung</span></div>
+        <div class="t-line"><span class="t-cmd">grep "error" /var/log/syslog | tail -5 | wc -l</span></div>
+        <div class="t-line"><span class="t-output">5</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">sort — urutkan baris (sort -r untuk descending)</span></div>
+        <div class="t-line"><span class="t-cmd">cat nilai.txt | sort</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">uniq — hapus baris duplikat (harus disort dulu)</span></div>
+        <div class="t-line"><span class="t-cmd">cat list.txt | sort | uniq</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SECTION 7: JARINGAN
+       =========================== -->
+  <section class="learn-section" id="jaringan">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Perintah Jaringan Dasar</h2>
+    </div>
+
+    <div class="theory-block">
+      <p>Untuk sysadmin atau developer yang kerja dengan server, mengerti perintah jaringan dasar itu wajib. Mulai dari cek koneksi, download file, sampai akses server remote via SSH.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="t-dot red"></div><div class="t-dot yellow"></div><div class="t-dot green"></div>
+        <span class="terminal-title">bash — networking</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-comment">Cek IP address lo</span></div>
+        <div class="t-line"><span class="t-cmd">ip addr show</span></div>
+        <div class="t-line"><span class="t-output t-out-info">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;</span></div>
+        <div class="t-line"><span class="t-output">    inet <span class="t-out-hl">192.168.1.100</span>/24 brd 192.168.1.255</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Test koneksi ke host (Ctrl+C untuk stop)</span></div>
+        <div class="t-line"><span class="t-cmd">ping google.com</span></div>
+        <div class="t-line"><span class="t-output t-out-success">64 bytes from 142.250.66.174: icmp_seq=1 ttl=117 time=12.3 ms</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Lihat port yang sedang terbuka / didengarkan</span></div>
+        <div class="t-line"><span class="t-cmd">ss -tlnp</span></div>
+        <div class="t-line"><span class="t-output t-out-info">State  Recv-Q Send-Q Local Address:Port</span></div>
+        <div class="t-line"><span class="t-output">LISTEN 0      128    0.0.0.0:<span class="t-out-hl">22</span>     ← SSH</span></div>
+        <div class="t-line"><span class="t-output">LISTEN 0      511    0.0.0.0:<span class="t-out-hl">80</span>     ← HTTP</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Download file dari internet</span></div>
+        <div class="t-line"><span class="t-cmd">wget https://example.com/data.csv</span></div>
+        <div class="t-line"><span class="t-cmd">curl -O https://example.com/data.json</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">SSH — masuk ke server remote (VPS lo)</span></div>
+        <div class="t-line"><span class="t-cmd">ssh fayazi@123.456.789.0</span></div>
+        <div class="t-line"><span class="t-output">fayazi@123.456.789.0's password:</span></div>
+        <div class="t-line"><span class="t-output t-out-success">Welcome to Ubuntu 22.04 LTS</span></div>
+        <div class="t-line"><span class="t-output">Last login: Wed Jul 10 08:00:00 2025 from 192.168.1.1</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">SSH dengan port custom dan key file</span></div>
+        <div class="t-line"><span class="t-cmd">ssh -p 2222 -i ~/.ssh/id_rsa fayazi@123.456.789.0</span></div>
+        <div class="t-gap"></div>
+        <div class="t-line"><span class="t-comment">Copy file ke/dari server remote via SCP</span></div>
+        <div class="t-line"><span class="t-cmd">scp bot.py fayazi@123.456.789.0:/home/fayazi/</span></div>
+        <div class="t-line"><span class="t-cmd">scp fayazi@123.456.789.0:/var/log/bot.log ./</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       CHEATSHEET
+       =========================== -->
+  <section class="learn-section" id="cheatsheet">
+    <div class="section-header">
+      <span class="section-num">⚡</span>
+      <h2>Cheatsheet Lengkap</h2>
+    </div>
+
+    <div class="cheatsheet-grid">
+      <div class="cheat-category">
+        <div class="cheat-cat-header">📁 NAVIGASI</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">pwd</span><span class="cheat-desc">Posisi sekarang</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">ls -la</span><span class="cheat-desc">List detail + hidden</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cd [dir]</span><span class="cheat-desc">Pindah direktori</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cd ~</span><span class="cheat-desc">Ke home dir</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cd ..</span><span class="cheat-desc">Naik satu level</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cd -</span><span class="cheat-desc">Kembali ke dir sebelumnya</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">📄 FILE OPS</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">touch file</span><span class="cheat-desc">Buat file kosong</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">mkdir dir</span><span class="cheat-desc">Buat direktori</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cp src dst</span><span class="cheat-desc">Salin file</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">mv src dst</span><span class="cheat-desc">Pindah/rename</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">rm file</span><span class="cheat-desc">Hapus file</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">rm -rf dir</span><span class="cheat-desc">Hapus direktori+isi</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">📝 TEKS</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">cat file</span><span class="cheat-desc">Tampilkan isi file</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">less file</span><span class="cheat-desc">Baca halaman per halaman</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">head -n</span><span class="cheat-desc">n baris pertama</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">tail -f</span><span class="cheat-desc">Live follow log</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">grep "x"</span><span class="cheat-desc">Cari teks</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cmd1 | cmd2</span><span class="cheat-desc">Pipe output</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">⚙️ PROSES</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">ps aux</span><span class="cheat-desc">Semua proses</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">top / htop</span><span class="cheat-desc">Monitor real-time</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">kill PID</span><span class="cheat-desc">Hentikan proses</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">kill -9 PID</span><span class="cheat-desc">Paksa hentikan</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">cmd &amp;</span><span class="cheat-desc">Jalankan background</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">df -h</span><span class="cheat-desc">Penggunaan disk</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">🔑 PERMISSION</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">chmod 755</span><span class="cheat-desc">rwxr-xr-x</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">chmod 644</span><span class="cheat-desc">rw-r--r--</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">chmod +x</span><span class="cheat-desc">Tambah execute</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">chown u:g</span><span class="cheat-desc">Ubah kepemilikan</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">sudo cmd</span><span class="cheat-desc">Jalankan sbg root</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">whoami</span><span class="cheat-desc">Cek user aktif</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">🌐 JARINGAN</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">ip addr</span><span class="cheat-desc">Lihat IP</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">ping host</span><span class="cheat-desc">Test koneksi</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">ssh user@ip</span><span class="cheat-desc">Remote login</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">scp src dst</span><span class="cheat-desc">Copy via SSH</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">wget URL</span><span class="cheat-desc">Download file</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">curl URL</span><span class="cheat-desc">HTTP request</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">📦 PACKAGE (APT)</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">apt update</span><span class="cheat-desc">Update daftar paket</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">apt upgrade</span><span class="cheat-desc">Upgrade semua paket</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">apt install x</span><span class="cheat-desc">Install paket</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">apt remove x</span><span class="cheat-desc">Hapus paket</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">apt search x</span><span class="cheat-desc">Cari paket</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">dpkg -l</span><span class="cheat-desc">List semua yang terinstall</span></div>
+        </div>
+      </div>
+      <div class="cheat-category">
+        <div class="cheat-cat-header">⌨️ SHORTCUT TERMINAL</div>
+        <div class="cheat-list">
+          <div class="cheat-item"><span class="cheat-cmd">Ctrl+C</span><span class="cheat-desc">Hentikan proses</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">Ctrl+Z</span><span class="cheat-desc">Suspend ke background</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">Ctrl+L</span><span class="cheat-desc">Clear layar</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">↑ / ↓</span><span class="cheat-desc">Navigasi history perintah</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">Tab</span><span class="cheat-desc">Auto-complete nama file</span></div>
+          <div class="cheat-item"><span class="cheat-cmd">Ctrl+R</span><span class="cheat-desc">Search history perintah</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end content-layout -->
+
+<!-- FOOTER NAV -->
+<nav class="page-footer-nav">
+  <a href="../index.html#belajar" class="footer-nav-link">← Kembali ke Arena Belajar</a>
+  <a href="belajar-docker.html" class="footer-nav-link">Lanjut: Docker →</a>
+</nav>
+
+<script>
+// SCROLL REVEAL
+const sections = document.querySelectorAll('.learn-section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+sections.forEach(s => observer.observe(s));
+
+// QUIZ LOGIC
+function checkQuiz(btn, isCorrect) {
+  const group = btn.closest('.quiz-options');
+  const allBtns = group.querySelectorAll('.quiz-opt');
+  allBtns.forEach(b => { b.disabled = true; b.onclick = null; });
+  
+  if (isCorrect) {
+    btn.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes('true')) {
+        b.classList.add('correct');
+      }
+    });
+  }
+
+  // Show answer
+  const qBlock = group.closest('.quiz-block') || group.parentElement;
+  const answers = qBlock ? qBlock.querySelectorAll('.quiz-answer') : [];
+  const idx = Array.from(group.parentElement.querySelectorAll('.quiz-options')).indexOf(group);
+  if (answers[idx]) answers[idx].classList.add('show');
+}
+</script>
+</body>
+</html>

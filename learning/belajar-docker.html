@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docker — Fayazi Learning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
+<style>
+:root {
+  --bg: #0D1117;
+  --bg2: #161B22;
+  --bg3: #1C2330;
+  --blue: #58A6FF;
+  --blue-dim: #1a3a6b;
+  --yellow: #E3B341;
+  --text: #C9D1D9;
+  --text-dim: #8B949E;
+  --border: rgba(255,255,255,0.08);
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-ui: 'Syne', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-ui); line-height: 1.7; }
+
+.site-header {
+  position: sticky; top: 0;
+  background: rgba(13,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 5%;
+  display: flex; align-items: center; gap: 1rem;
+  z-index: 100;
+}
+.back-btn { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-family: var(--font-mono); }
+.back-btn:hover { color: var(--blue); }
+.back-btn::before { content: '← '; }
+.header-path { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
+.header-path .hl { color: var(--blue); }
+
+.hero { padding: 60px 5% 40px; max-width: 900px; margin: 0 auto; }
+.hero-tag { font-family: var(--font-mono); color: var(--blue); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 1rem; }
+.hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); }
+.hero h1 .accent { color: var(--blue); }
+.hero p { color: var(--text-dim); margin-top: 1rem; max-width: 640px; }
+
+.jump-nav { display: flex; flex-wrap: wrap; gap: 8px; max-width: 900px; margin: 0 auto 2rem; padding: 0 5%; }
+.jump-btn {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: var(--text-dim); text-decoration: none;
+  border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px;
+}
+.jump-btn:hover { color: var(--blue); border-color: var(--blue); }
+
+.learn-section { max-width: 900px; margin: 0 auto; padding: 2.5rem 5%; border-top: 1px solid var(--border); }
+.learn-section h2 { font-size: 1.6rem; margin-bottom: 1rem; }
+.learn-section h2 .num { color: var(--blue); font-family: var(--font-mono); margin-right: 8px; }
+.learn-section p { margin-bottom: 1rem; color: var(--text); }
+.learn-section ul { margin: 0 0 1rem 1.2rem; }
+.learn-section li { margin-bottom: 0.5rem; }
+
+.code-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  color: #79C0FF;
+}
+.code-block .comment { color: var(--text-dim); }
+
+.concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; margin: 1.5rem 0; }
+.concept-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
+.concept-card h4 { color: var(--blue); font-size: 0.95rem; margin-bottom: 0.4rem; }
+.concept-card p { font-size: 0.85rem; color: var(--text-dim); margin: 0; }
+
+.callout {
+  background: rgba(227,179,65,0.08);
+  border-left: 3px solid var(--yellow);
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 1.5rem 0;
+}
+.callout strong { color: var(--yellow); }
+
+footer.footer-nav { text-align: center; padding: 2.5rem 5%; }
+.footer-nav-link { color: var(--text-dim); font-family: var(--font-mono); font-size: 0.85rem; text-decoration: none; }
+.footer-nav-link:hover { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="../index.html#belajar" class="back-btn">Kembali</a>
+  <span class="header-path">Arena &gt; Infrastruktur &gt; <span class="hl">Docker</span></span>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">INFRASTRUKTUR &amp; SISTEM</div>
+  <h1>Docker & <span class="accent">Kontainerisasi</span></h1>
+  <p>Cara mengemas aplikasi supaya "jalan di laptop saya" berubah jadi "jalan di mana saja". Progres saat ini 40% — fondasi konsep sudah, tahap lanjut masih jalan.</p>
+</div>
+
+<nav class="jump-nav">
+  <a href="#kenapa" class="jump-btn">01. Kenapa Docker?</a>
+  <a href="#konsep" class="jump-btn">02. Konsep Inti</a>
+  <a href="#perintah" class="jump-btn">03. Perintah Dasar</a>
+  <a href="#dockerfile" class="jump-btn">04. Dockerfile</a>
+  <a href="#compose" class="jump-btn">05. Docker Compose</a>
+  <a href="#cheatsheet" class="jump-btn">⚡ Cheatsheet</a>
+</nav>
+
+<section class="learn-section" id="kenapa">
+  <h2><span class="num">01.</span>Kenapa Harus Docker?</h2>
+  <p>Bayangkan Google Sheet dan App Script yang dipakai untuk sistem stok gorengan. Kalau itu dijalankan di server, dan servernya beda versi Node/Python dari laptop sendiri, bisa saja error yang tidak pernah muncul saat development. Docker menyelesaikan ini dengan cara membungkus aplikasi beserta seluruh dependensinya (library, runtime, config) jadi satu paket yang disebut <strong>container</strong> — sehingga perilakunya identik di mana pun dijalankan.</p>
+  <div class="callout"><strong>Analogi dapur:</strong> Dockerfile itu resep. Image itu adonan jadi yang sudah dicetak dan siap dipakai kapan saja. Container itu adonan yang sedang digoreng — hidup, jalan, bisa dimatikan dan dinyalakan lagi tanpa mengubah resepnya.</div>
+</section>
+
+<section class="learn-section" id="konsep">
+  <h2><span class="num">02.</span>Konsep Inti</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h4>Image</h4><p>Blueprint statis — berisi kode, dependensi, dan instruksi cara menjalankan aplikasi. Tidak berubah, hanya dibaca.</p></div>
+    <div class="concept-card"><h4>Container</h4><p>Instance yang berjalan dari sebuah image. Bisa dinyalakan, dimatikan, dihapus, dibuat ulang kapan saja.</p></div>
+    <div class="concept-card"><h4>Dockerfile</h4><p>File teks berisi langkah-langkah untuk membangun sebuah image, dari base image sampai perintah start.</p></div>
+    <div class="concept-card"><h4>Volume</h4><p>Penyimpanan data yang tetap ada meski containernya dihapus — penting untuk data yang tidak boleh hilang.</p></div>
+    <div class="concept-card"><h4>Registry</h4><p>Tempat menyimpan & mengambil image, contohnya Docker Hub — seperti GitHub tapi untuk image.</p></div>
+    <div class="concept-card"><h4>Network</h4><p>Cara container saling terhubung, misalnya container aplikasi bicara ke container database.</p></div>
+  </div>
+</section>
+
+<section class="learn-section" id="perintah">
+  <h2><span class="num">03.</span>Perintah Dasar yang Wajib Hafal</h2>
+  <div class="code-block">
+docker ps <span class="comment"># lihat container yang sedang jalan</span><br>
+docker ps -a <span class="comment"># lihat semua container termasuk yang mati</span><br>
+docker images <span class="comment"># lihat semua image di lokal</span><br>
+docker run -d -p 8080:80 nginx <span class="comment"># jalankan container dari image nginx</span><br>
+docker stop &lt;container_id&gt; <span class="comment"># hentikan container</span><br>
+docker rm &lt;container_id&gt; <span class="comment"># hapus container</span><br>
+docker rmi &lt;image_id&gt; <span class="comment"># hapus image</span><br>
+docker logs &lt;container_id&gt; <span class="comment"># lihat log output container</span><br>
+docker exec -it &lt;container_id&gt; bash <span class="comment"># masuk ke dalam container</span>
+  </div>
+</section>
+
+<section class="learn-section" id="dockerfile">
+  <h2><span class="num">04.</span>Dockerfile Sederhana</h2>
+  <p>Contoh Dockerfile untuk aplikasi Node.js kecil — misal auto-responder atau bot yang pernah dicoba sebelumnya:</p>
+  <div class="code-block">
+FROM node:20-alpine<br>
+WORKDIR /app<br>
+COPY package*.json ./<br>
+RUN npm install<br>
+COPY . .<br>
+EXPOSE 3000<br>
+CMD ["node", "index.js"]
+  </div>
+  <p>Build dan jalankan:</p>
+  <div class="code-block">
+docker build -t bot-wa .<br>
+docker run -d -p 3000:3000 --name bot-wa-running bot-wa
+  </div>
+</section>
+
+<section class="learn-section" id="compose">
+  <h2><span class="num">05.</span>Docker Compose — Kelola Banyak Container</h2>
+  <p>Kalau sistem terdiri dari lebih dari satu bagian (misal: bot + database), <code>docker-compose.yml</code> memudahkan menjalankan semuanya sekaligus dengan satu perintah.</p>
+  <div class="code-block">
+version: "3.8"<br>
+services:<br>
+&nbsp;&nbsp;bot:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;build: .<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ports:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- "3000:3000"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;depends_on:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- db<br>
+&nbsp;&nbsp;db:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;image: postgres:16<br>
+&nbsp;&nbsp;&nbsp;&nbsp;environment:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;POSTGRES_PASSWORD: contoh
+  </div>
+  <div class="code-block">docker compose up -d <span class="comment"># jalankan semua service di background</span></div>
+</section>
+
+<section class="learn-section" id="cheatsheet">
+  <h2><span class="num">⚡</span>Cheatsheet Ringkas</h2>
+  <ul>
+    <li><strong>Bersihkan sisa image/container nganggur:</strong> <code>docker system prune -a</code></li>
+    <li><strong>Cek pemakaian resource:</strong> <code>docker stats</code></li>
+    <li><strong>Copy file dari/ke container:</strong> <code>docker cp file.txt &lt;id&gt;:/app/</code></li>
+    <li><strong>Restart otomatis kalau server reboot:</strong> tambahkan <code>restart: always</code> di compose, atau <code>--restart=always</code> di <code>docker run</code></li>
+  </ul>
+  <div class="callout"><strong>Langkah lanjut:</strong> setelah paham konsep dasar ini, latihan paling efektif adalah container-kan salah satu proyek kecil yang sudah ada — misalnya sistem stok gorengan berbasis App Script tidak bisa, tapi kalau nanti bot WhatsApp dicoba ulang, itu kandidat bagus untuk di-dockerize.</div>
+</section>
+
+<footer class="footer-nav">
+  <a href="../index.html#belajar" class="footer-nav-link">← Kembali ke Arena Belajar</a>
+</footer>
+
+<script>feather.replace();</script>
+</body>
+</html>
